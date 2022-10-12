@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title>2_Session</title>
 		<!-- 
-			날짜 : 2022/10/125
+			날짜 : 2022/10/12
 			이름 : 박가영
 			내용 : JSP Session 실습하기
 		 -->
