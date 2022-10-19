@@ -1,12 +1,61 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="config.DBCP"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="_header.jsp" %>
+<%@ include file="./_header.jsp" %>
+<script>
+	$(function(){
+		
+		$('.btnNext').click(function(){
+			
+			let isCheck1 = $('input[class=terms]').is(":checked");
+			let isCheck2 = $('input[class=privacy]').is(":checked");
+			
+			if(isCheck1 && isCheck2){
+				return true;
+				
+			}else{
+				alert('동의 체크를 하셔야 합니다.');
+				return false;
+			}
+			
+		});
+		
+	});
+</script>
+<%
+	String terms = null;
+	String privacy = null;
+
+	try{
+		Connection conn = DBCP.getConnection();
+		
+		Statement stmt = conn.createStatement();
+		
+		ResultSet rs = stmt.executeQuery("SELECT * FROM `board_terms`");
+		
+		if(rs.next()){
+			terms = rs.getString(1);
+			privacy = rs.getString(2);
+		}
+		rs.close();
+		stmt.close();
+		conn.close();
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	
+	
+%>
 <main id="user">
     <section class="terms">
         <table border="1">
             <caption>사이트 이용약관</caption>
             <tr>
                 <td>
-                <textarea name="terms">약관내용</textarea>
+                <textarea name="terms"><%= terms %></textarea>
                 <label><input type="checkbox" for="checkbox" class="terms">&nbsp;동의합니다.</label>
                 </td>
             </tr>
@@ -15,8 +64,8 @@
             <caption>개인정보 취급방침</caption>
             <tr>
                 <td>
-                <textarea name="privacy">약관내용</textarea>
-                <label><input type="checkbox" for="checkbox" class="terms">&nbsp;동의합니다.</label>
+                <textarea name="terms"><%=privacy %></textarea>
+                <label><input type="checkbox" for="checkbox" class="privacy">&nbsp;동의합니다.</label>
                 </td>
             </tr>
         </table>
