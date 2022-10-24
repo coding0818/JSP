@@ -1,3 +1,4 @@
+<%@page import="config.DBCP"%>
 <%@page import="org.jdom2.output.Format"%>
 <%@page import="org.jdom2.output.XMLOutputter"%>
 <%@page import="org.jdom2.Element"%>
@@ -9,7 +10,6 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="config.DBCP"%>
 <%@ page contentType="text/xml;charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%
 	List<UserBean> users = new ArrayList<>();
