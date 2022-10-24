@@ -2,8 +2,8 @@
 <%@ include file="./_header.jsp" %>
 <main id="board">
     <section class="write">
-        <form action="#">
-            
+        <form action="/Jboard1/proc/writeProc.jsp" method="post">
+            <input type="hidden" name="uid" value="<%= ub.getUid() %>">
             <table>
                 <caption>글쓰기</caption>
                     <tr>

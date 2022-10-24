@@ -1,5 +1,6 @@
+<%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="config.DBCP"%>
+<%@page import="kr.co.jboard1.db.DBCP"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
@@ -34,7 +35,7 @@
 		
 		Statement stmt = conn.createStatement();
 		
-		ResultSet rs = stmt.executeQuery("SELECT * FROM `board_terms`");
+		ResultSet rs = stmt.executeQuery(Sql.SELECT_TERMS);
 		
 		if(rs.next()){
 			terms = rs.getString(1);
