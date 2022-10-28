@@ -50,7 +50,9 @@ public class Sql {
 											  + "left JOIN `board_file` AS b "
 											  + "ON a.`no` = b.`parent` "	
 											  + "WHERE `no`=?";
+	public static final String SELECT_FILE = "select * from `board_file` where `parent`=?";
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
 	
+	public static final String UPDATE_FILE_DOWNLOAD = "update `board_file` set `download` = `download` + 1 where `fno`=?";
 }

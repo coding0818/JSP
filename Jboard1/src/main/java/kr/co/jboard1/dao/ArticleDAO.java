@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.jboard1.bean.ArticleBean;
+import kr.co.jboard1.bean.FileBean;
 import kr.co.jboard1.db.DBCP;
 import kr.co.jboard1.db.Sql;
 
@@ -21,7 +22,61 @@ public class ArticleDAO {
 	private ArticleDAO() {}
 	
 	// 기본 CRUD
-	public void insertArticle() {}
+	public int insertArticle(ArticleBean article) {
+		int parent = 0;
+
+		try{
+			Connection conn = DBCP.getConnection();
+			// 트랜젝션 시작
+			conn.setAutoCommit(false);
+			
+			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
+			Statement stmt = conn.createStatement();
+			
+			psmt.setString(1, article.getTitle());
+			psmt.setString(2, article.getContent());
+			psmt.setInt(3, article.getFname() == null ? 0:1);
+			psmt.setString(4, article.getUid());
+			psmt.setString(5, article.getRegip());
+			
+			psmt.executeUpdate();
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
+			
+			// 작업확정
+			conn.commit();
+			
+			if(rs.next()){
+				parent = rs.getInt(1);
+			}
+			
+			psmt.close();
+			conn.close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return parent;
+	}
+	
+	public void insertFile(int parent, String newName, String fname) {
+		
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_FILE);
+			psmt.setInt(1, parent);
+			psmt.setString(2, newName);
+			psmt.setString(3, fname);
+			
+			psmt.executeUpdate();
+			
+			psmt.close();
+			conn.close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 	public int selectCountTotal() {
 		
@@ -126,6 +181,35 @@ public class ArticleDAO {
 		
 		return articles;
 	}
+	
+	public FileBean selectFile(String parent) {
+		FileBean fb = null;
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt =  conn.prepareStatement(Sql.SELECT_FILE);
+			psmt.setString(1, parent);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				fb = new FileBean();
+				fb.setFno(rs.getInt(1));
+				fb.setParent(rs.getInt(2));
+				fb.setNewName(rs.getString(3));
+				fb.setOriName(rs.getString(4));
+				fb.setDownload(rs.getInt(5));
+			}
+			
+			rs.close();
+			psmt.close();
+			conn.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return fb;
+	}
+	
 	public void updateArticle() {}
 	
 	public void updateArticleHit(String no) {
@@ -134,6 +218,20 @@ public class ArticleDAO {
 			Connection conn = DBCP.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
 			psmt.setString(1, no);
+			psmt.executeUpdate();
+			
+			psmt.close();
+			conn.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateFileDownload(int fno) {
+		try {
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_FILE_DOWNLOAD);
+			psmt.setInt(1, fno);
 			psmt.executeUpdate();
 			
 			psmt.close();

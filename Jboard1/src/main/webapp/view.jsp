@@ -10,6 +10,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String no = request.getParameter("no");
+	String pg = request.getParameter("pg");
 	
 	ArticleDAO dao = ArticleDAO.getInstance();
 	
@@ -32,7 +33,7 @@
                 <% if(article.getFile() > 0){ %>
                 <tr>
                     <th>첨부파일</th>
-                    <td><a href="#"><%= article.getOriName() %></a>&nbsp;<span><%= article.getDownload() %></span>회 다운로드</td>
+                    <td><a href="/Jboard1/proc/download.jsp?parent=<%= article.getNo()%>"><%= article.getOriName() %></a>&nbsp;<span><%= article.getDownload() %></span>회 다운로드</td>
                 </tr>
                 <% } %>
                 <tr>
@@ -43,7 +44,7 @@
         <div>
                 <a href="#" class="btn btnview">삭제</a>
                 <a href="/Jboard1/modify.jsp" class="btn btnview">수정</a>
-                <a href="/Jboard1/list.jsp" class="btn btnview">목록</a>
+                <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnview">목록</a>
         </div>
         
         <!--댓글목록-->
