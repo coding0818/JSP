@@ -4,7 +4,7 @@
 	UserBean ub = (UserBean)session.getAttribute("sessUser");
 
 	if(ub == null){
-		response.sendRedirect("Jboard1/user/login.jsp?success=101");
+		response.sendRedirect("/Jboard1/user/login.jsp?success=101");
 		return;
 	}
 %>
