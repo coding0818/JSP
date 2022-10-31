@@ -35,13 +35,21 @@ public class Sql {
 										   + "`newName`=?,"
 										   + "`oriName`=?";
 	
+	public static final String INSERT_COMMENT = "insert into `board_article` set "
+												+ "`parent`=?,"
+										    	+ "`content`=?,"
+										    	+ "`uid`=?,"
+												+ "`regip`=?,"
+												+ "`rdate`=NOW()";
+											
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
 	
-	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article`";
+	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article` WHERE `parent` = 0";
 	
 	public static final String SELECT_ARTICLES = "SELECT a.*, b.nick FROM `board_article` AS a "
 											   + "JOIN `board_user` AS b "
 											   + "ON a.uid= b.uid "
+											   + "WHERE `parent`= 0 "
 											   + "ORDER BY `no` DESC "
 											   + "LIMIT ?, 10";
 	
@@ -50,7 +58,18 @@ public class Sql {
 											  + "left JOIN `board_file` AS b "
 											  + "ON a.`no` = b.`parent` "	
 											  + "WHERE `no`=?";
+	
 	public static final String SELECT_FILE = "select * from `board_file` where `parent`=?";
+	
+	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `board_article` AS a "
+												+ "JOIN `board_user` AS b "
+												+ "ON a.uid = b.uid "
+												+ "WHERE `parent`=? ORDER BY `no` ASC";
+	
+	public static final String SELECT_COMMENT_LATEST = "SELECT a.*,b.nick from `board_article` AS a "
+														+ "JOIN `board_user` AS b "
+														+ "USING(`uid`) "
+														+ "WHERE `parent`<>0 ORDER BY `no` DESC LIMIT 1;";
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
 	
