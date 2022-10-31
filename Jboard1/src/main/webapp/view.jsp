@@ -33,9 +33,7 @@
 			
 			let no      = $(this).children('input[name=no]').val();
 			let uid     = $(this).children('input[name=uid]').val();
-			let nick    = $(this).children('input[name=nick]').val();
 			let content = $(this).children('textarea[name=content]').val();
-			let date    = $(this).children('textarea[name=content]').val();
 			
 			if(content == ''){
 				alert('댓글을 작성하세요.');
@@ -67,7 +65,8 @@
 							article += "<a href='#' class='modify'>수정</a>";  
 							article += "</div>";
 							article += "</article>";
-							
+						
+						$('.commentList > .empty').hide();
 						$('.commentList').append(article);
 					}
 					
@@ -133,7 +132,6 @@
             <form action="#" method="post">
             	<input type="hidden" name="uid" value="<%= ub.getUid() %>">
             	<input type="hidden" name="no" value="<%= no %>">
-            	<input type="hidden" name="nick" value="<%= ub.getNick() %>">
                 <textarea name="content" placeholder="댓글을 입력하세요."></textarea>
                 <div>
                     <a href="#" class="btn btnCancel">취소</a>
