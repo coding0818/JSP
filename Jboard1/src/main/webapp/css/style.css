@@ -265,7 +265,7 @@ footer > p{
 #board > .list > .page > a{
     display: inline-block;
     padding: 8px;
-    border: 1px solid#d7d7d7;
+    border: 1px solid #d7d7d7;
     background: #f2f2f2;
 }
 #board > .list > .page > .prev{}
@@ -396,6 +396,7 @@ footer > p{
 #board > .view > .commentList .content{
     padding: 10px;
     box-sizing: border-box;
+    white-space: pre-wrap;
 }
 #board > .view > .commentList > .empty{
     text-align: center;
