@@ -1,3 +1,5 @@
+<%@page import="kr.co.jboard1.bean.UserBean"%>
+<%@page import="kr.co.jboard1.dao.UserDAO"%>
 <%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="kr.co.jboard1.db.DBCP"%>
@@ -16,28 +18,19 @@
 	String addr2 = request.getParameter("addr2");
 	String regip = request.getRemoteAddr();
 	
-	try{
-		Connection conn = DBCP.getConnection();
-		PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_USER);
-		psmt.setString(1, uid);
-		psmt.setString(2, pass1);
-		psmt.setString(3, name);
-		psmt.setString(4, nick);
-		psmt.setString(5, email);
-		psmt.setString(6, hp);
-		psmt.setString(7, zip);
-		psmt.setString(8, addr1);
-		psmt.setString(9, addr2);
-		psmt.setString(10, regip);
-		
-		psmt.executeUpdate();
-		
-		psmt.close();
-		conn.close();
-		
-	}catch(Exception e){
-		e.printStackTrace();
-	}
+	UserBean user = new UserBean();
+	user.setUid(uid);
+	user.setPass(pass1);
+	user.setName(name);
+	user.setNick(nick);
+	user.setEmail(email);
+	user.setHp(hp);
+	user.setZip(zip);
+	user.setAddr1(addr1);
+	user.setAddr2(addr2);
+	user.setRegip(regip);
+	
+	UserDAO.getInstance().insertUser(user);
 
 	response.sendRedirect("/Jboard1/user/login.jsp");
 

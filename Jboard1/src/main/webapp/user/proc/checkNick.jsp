@@ -1,3 +1,4 @@
+<%@page import="kr.co.jboard1.dao.UserDAO"%>
 <%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="java.sql.ResultSet"%>
@@ -9,27 +10,7 @@
 	request.setCharacterEncoding("utf-8");
 	String nick = request.getParameter("nick");
 
-	int result = 0;
-	
-	try{
-		Connection conn = DBCP.getConnection();
-		
-		PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_NICK);
-		psmt.setString(1, nick);
-		
-		ResultSet rs = psmt.executeQuery();
-		
-		if(rs.next()){
-			result = rs.getInt(1);
-		}
-		
-		rs.close();
-		psmt.close();
-		conn.close();
-		
-	}catch(Exception e){
-		e.printStackTrace();
-	}
+	int result = UserDAO.getInstance().selectCountNick(nick);
 
 	JsonObject json = new JsonObject();
 	json.addProperty("result", result);
