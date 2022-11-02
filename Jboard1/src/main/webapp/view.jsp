@@ -29,6 +29,20 @@
 
 	$(document).ready(function(){
 		
+		//  글 삭제
+		$('.btnRemove').click(function(){
+			
+			let isDelete = confirm('정말 삭제 하시겠습니까?');
+			
+			if(isDelete){
+				return true;
+			}else{
+				return false;
+			}
+			
+		});
+		
+		
 		// 댓글 삭제
 		$(document).on('click', '.remove', function(e){
 			e.preventDefault();
@@ -154,6 +168,7 @@
 		
 	});
 	
+	
 </script>
 <main id="board">
     <section class="view">
@@ -176,8 +191,8 @@
                 </tr>
         </table>
         <div>
-                <a href="#" class="btn btnview">삭제</a>
-                <a href="/Jboard1/modify.jsp" class="btn btnview">수정</a>
+                <a href="/Jboard1/proc/deleteProc.jsp?no=<%= article.getNo() %>&pg=<%= pg %>" class="btn btnRemove">삭제</a>
+                <a href="/Jboard1/modify.jsp?no=<%= article.getNo() %>&pg=<%= pg %>" class="btn btnview">수정</a>
                 <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnview">목록</a>
         </div>
         
