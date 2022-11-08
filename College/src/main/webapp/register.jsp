@@ -118,7 +118,7 @@
 						console.log(data);
 						
 						for(let register of data){
-							let table = "<tr>";
+							let table = "<tr class=row>";
 							table += "<td>"+register.regStdNo+"</td>";
 							table += "<td>"+register.stdName+"</td>";
 							table += "<td>"+register.lecName+"</td>";
