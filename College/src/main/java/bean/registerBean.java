@@ -44,7 +44,13 @@ public class registerBean {
 		return regGrade;
 	}
 	public void setRegGrade(String regGrade) {
-		this.regGrade = regGrade;
+		
+		if(regGrade != null) {
+			this.regGrade = regGrade;
+		}else {
+			this.regGrade = "-";
+		}
+		
 	}
 	public String getStdName() {
 		return stdName;

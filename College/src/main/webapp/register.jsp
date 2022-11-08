@@ -83,7 +83,7 @@
 					dataType: 'json',
 					success: function(data){
 						
-						let table = "<tr>";
+						let table = "<tr class=row>";
 						table += "<td>"+data.regStdNo+"</td>";
 						table += "<td>"+data.stdName+"</td>";
 						table += "<td>"+data.result+"</td>";
@@ -134,8 +134,9 @@
 							
 					}
 				});
-				
 			});
+			
+			//$(document).on('click', '.btnScore' function(){});
 		});
 		</script>
 	</head>
@@ -159,6 +160,7 @@
 				<th>기말시험</th>
 				<th>총점</th>
 				<th>등급</th>
+				<th></th>
 			</tr>
 			<% for(registerBean register : registers){ %>
 			<tr class="row">
@@ -170,6 +172,9 @@
 				<td><%= register.getRegFinalScore() %></td>
 				<td><%= register.getRegTotalScore() %></td>
 				<td><%= register.getRegGrade() %></td>
+				<td>
+					<button class="btnScore">점수입력</button>
+				</td>
 			</tr>
 			<% } %>
 		</table>
