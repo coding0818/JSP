@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.User2DAO;
+
 @WebServlet ("/user2/delete.do")
 public class DeleteController extends HttpServlet{
 
@@ -19,7 +21,11 @@ public class DeleteController extends HttpServlet{
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String uid = req.getParameter("uid");
 		
+		User2DAO.getInstance().deleteUser2(uid);
+		
+		resp.sendRedirect("/user2/list.do");
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
