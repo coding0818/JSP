@@ -13,7 +13,22 @@ public class User3DAO extends DBHelper{
 	}
 	private User3DAO() {}
 	
-	public void insertUser3() {}
+	public void insertUser3(User3VO vo) {
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement("insert into `user3` values (?,?,?,?)");
+			psmt.setString(1, vo.getUid());
+			psmt.setString(2, vo.getName());
+			psmt.setString(3, vo.getHp());
+			psmt.setInt(4, vo.getAge());
+			
+			psmt.executeUpdate();
+			
+			close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public User3VO selectUser3(String uid) {
 		User3VO vo = null;
 		
@@ -71,5 +86,17 @@ public class User3DAO extends DBHelper{
 			e.printStackTrace();
 		}
 	}
-	public void deleteUser3() {}
+	public void deleteUser3(String uid) {
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement("delete from `user3` where `uid`=?");
+			psmt.setString(1, uid);
+			
+			psmt.executeUpdate();
+			
+			close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

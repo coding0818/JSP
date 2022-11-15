@@ -45,5 +45,6 @@ public class ModifyController extends HttpServlet{
 		vo.setAge(age);
 		
 		User3DAO.getInstance().updateUser3(vo);
+		resp.sendRedirect("/Ch09/user3/list.do");
 	}
 }

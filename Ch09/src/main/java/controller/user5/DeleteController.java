@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet ("/user2/delete.do")
+@WebServlet ("/user5/delete.do")
 public class DeleteController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;

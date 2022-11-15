@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.User3DAO;
-import vo.User3VO;
+import dao.User4DAO;
+import vo.User4VO;
 
 @WebServlet ("/user4/list.do")
 public class ListController extends HttpServlet{
@@ -24,8 +24,10 @@ public class ListController extends HttpServlet{
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
+		List<User4VO> users = User4DAO.getInstance().selectUser4s();
+		req.setAttribute("users", users);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user4/list.jsp");
+		dispatcher.forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
