@@ -7,7 +7,7 @@
 %>
 <main id="board">
     <section class="modify">
-        <form action="#">
+        <form action="./proc/modifyProc.jsp">
             
             <table>
                 <caption>글수정</caption>
