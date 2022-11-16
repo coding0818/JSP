@@ -1,8 +1,14 @@
+<%@page import="kr.co.farmstory1.dao.ArticleDAO"%>
+<%@page import="kr.co.farmstory1.bean.ArticleBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
 <%
 	String group = request.getParameter("group");
 	String cate = request.getParameter("cate");
+	String pg = request.getParameter("pg");
+	String no = request.getParameter("no");
+	
+	ArticleBean article = ArticleDAO.getInstance().selectArticle(no, cate);
 	
 	pageContext.include("/board/_"+group+".jsp");
 %>
@@ -13,7 +19,7 @@
             <caption>글보기</caption>
                 <tr>
                     <th>제목</th>
-                    <td><input type="text" name="title" readonly></td>
+                    <td><input type="text" name="title" readonly value="<%= article.getTitle() %>"></td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
@@ -21,13 +27,13 @@
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td><textarea name="content" readonly>내용 샘플입니다.</textarea></td>
+                    <td><textarea name="content" readonly><%= article.getContent() %></textarea></td>
                 </tr>
         </table>
         <div>
                 <a href="#" class="btn btnview">삭제</a>
                 <a href="/Farmstory1/board/modify.jsp?group=<%=group %>&cate=<%=cate %>" class="btn btnview">수정</a>
-                <a href="/Farmstory1/board/list.jsp?group=<%=group %>&cate=<%=cate %>" class="btn btnview">목록</a>
+                <a href="/Farmstory1/board/list.jsp?group=<%=group %>&cate=<%=cate %>&pg=<%= pg %>" class="btn btnview">목록</a>
         </div>
         
         <!--댓글목록-->
