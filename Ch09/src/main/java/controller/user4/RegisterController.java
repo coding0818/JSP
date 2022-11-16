@@ -37,7 +37,7 @@ public class RegisterController extends HttpServlet{
 		User4VO vo = new User4VO();
 		vo.setSeq(seq);
 		vo.setName(name);
-		vo.setGender(gender);
+		//vo.setGender(gender);
 		vo.setAge(age);
 		vo.setAddr(addr);
 		User4DAO.getInstance().insertUser4(vo);
