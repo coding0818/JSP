@@ -1,5 +1,8 @@
 package kr.co.farmstory1.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +61,43 @@ public class ArticleDAO extends DBHelper{
 			logger.error(e.getMessage());
 		}
 		
+	}
+	public ArticleBean insertComment(ArticleBean comment) {
+		ArticleBean article = null;
+		try {
+			logger.info("insertFile...");
+			
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.INSERT_COMMENT);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUS);
+			Statement stmt = conn.createStatement();
+			psmt1.setInt(1, comment.getParent());
+			psmt1.setString(2, comment.getContent());
+			psmt1.setString(3, comment.getUid());
+			psmt1.setString(4, comment.getRegip());
+			
+			psmt2.setInt(1, comment.getParent());
+			
+			psmt1.executeUpdate();
+			psmt2.executeUpdate();
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
+			
+			conn.commit();
+			if(rs.next()) {
+				article = new ArticleBean();
+				article.setNo(rs.getInt(1));
+				article.setParent(rs.getInt(2));
+				article.setContent(rs.getString(6));
+				article.setRdate(rs.getString(11).substring(2, 10));
+				article.setNick(rs.getString(12));
+			}
+			
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return article;
 	}
 	public ArticleBean selectArticle(String no, String cate) {
 		ArticleBean article = null;
@@ -188,7 +228,65 @@ public class ArticleDAO extends DBHelper{
 		}
 		return total;
 	}
-	public void updateArticle() {}
+	public List<ArticleBean> selectComments(String parent) {
+		List<ArticleBean> comments = new ArrayList<>();
+		try {
+			logger.info("selectComments...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_COMMENTS);
+			psmt.setString(1, parent);
+			rs = psmt.executeQuery();
+			
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return comments;
+	}
+	
+	public void updateArticle(String title, String content, String no) {
+		try {
+			logger.info("updateArticle...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			psmt.executeUpdate();
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	public void updateArticleHit(String no) {
+		try {
+			logger.info("updateArticleHit...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	public int updateComment(String no, String content) {
+		int result = 0;
+		try {
+			logger.info("updateComment...");
+			conn = getConnection();
+			
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setString(2, no);			
+			result = psmt.executeUpdate();
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
 	public void deleteArticle() {}
 	
 }

@@ -2,7 +2,8 @@
 <%@ include file="/_header.jsp" %>
 <%
 	if(sessUser == null){
-		response.sendRedirect("/Farmstory1/user/login.jsp?success=101");		
+		response.sendRedirect("/Farmstory1/user/login.jsp?success=101");
+		return;
 	}
 
 	String group = request.getParameter("group");

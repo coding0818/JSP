@@ -10,6 +10,11 @@
 	request.setCharacterEncoding("UTF-8");
 
 	String savePath = application.getRealPath("/file");
+	File targetDir = new File(savePath);
+	if(!targetDir.exists()){
+		targetDir.mkdirs();
+	}
+	
 	int maxSize = 1024 * 1024 * 10;
 	MultipartRequest mr = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 

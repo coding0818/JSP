@@ -23,14 +23,15 @@
 
             $('#tabs').tabs();
             
-            let success = "<%= success %>";
-            
-            if(success == '100'){
-            	alert('일치하는 회원이 없습니다.\n아이디, 비밀번호를 확인해주십시요.');
-            }else if(success == '101'){
-            	alert('로그인을 하십시요.');
-            }
         });
+        let success = "<%= success %>";
+        
+        if(success == '100'){
+        	alert('일치하는 회원이 없습니다.\n아이디, 비밀번호를 확인해주십시요.');
+        }else if(success == '101'){
+        	alert('로그인을 하십시요.');
+        }
+        
     </script>
 </head>
 <body>

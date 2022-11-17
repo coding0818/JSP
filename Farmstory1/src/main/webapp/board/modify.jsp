@@ -6,6 +6,7 @@
 	String group = request.getParameter("group");
 	String cate = request.getParameter("cate");
 	String no = request.getParameter("no");
+	String pg = request.getParameter("pg");
 	
 	ArticleBean article = ArticleDAO.getInstance().selectArticle(no, cate);
 	
@@ -14,9 +15,13 @@
 <main id="board">
     <section class="modify">
         <form action="./proc/modifyProc.jsp">
-            
+            <input type="hidden" name="no" value="<%= no%>"/>
+            <input type="hidden" name="group" value="<%= group%>"/>
+            <input type="hidden" name="cate" value="<%= cate%>"/>
+            <input type="hidden" name="pg" value="<%= pg%>"/>
             <table>
                 <caption>글수정</caption>
+                	
                     <tr>
                         <th>제목</th>
                         <td><input type="text" name="title" value="<%= article.getTitle()%>"></td>
@@ -34,10 +39,13 @@
             </table>
             <div>
                     <a href="./view.jsp?group=<%=group %>&cate=<%=cate %>&no=<%=no %>" class="btn btnCancel">취소</a>
-                    <input type="submit" value="작성완료" class="btn btnComplete">
+                    <input type="submit" value="수정완료" class="btn btnComplete">
             </div>
         </form>
        
     </section>
 </main>
+</article>
+  </section>
+</div>
 <%@ include file="/_footer.jsp" %>
