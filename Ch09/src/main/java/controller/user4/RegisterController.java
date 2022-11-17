@@ -30,17 +30,17 @@ public class RegisterController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String seq = req.getParameter("seq");
 		String name = req.getParameter("name");
-		String[] gender = req.getParameterValues("gender");
+		String gender = req.getParameter("gender");
 		String age = req.getParameter("age");
 		String addr = req.getParameter("addr");
 		
 		User4VO vo = new User4VO();
 		vo.setSeq(seq);
 		vo.setName(name);
-		//vo.setGender(gender);
+		vo.setGender(gender);
 		vo.setAge(age);
 		vo.setAddr(addr);
 		User4DAO.getInstance().insertUser4(vo);
-		resp.sendRedirect("/user4/list.do");
+		resp.sendRedirect("/Ch09/user4/list.do");
 	}
 }

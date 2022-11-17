@@ -23,7 +23,7 @@
 				<tr>
 					<td>성별</td>
 					<td>
-						<select>
+						<select name="gender">
 							<option value="2">남자</option>
 							<option value="1">여자</option>
 						</select>
