@@ -23,7 +23,7 @@
                 </tr>
                 <tr>
                     <th>첨부파일</th>
-                    <td><a href="#"> 2020년 상반기 매출자료.xls</a>&nbsp<span>7</span>회 다운로드</td>
+                    <td><a href="#"> <%= article.getOriName()%></a>&nbsp<span><%= article.getDownload() %></span>회 다운로드</td>
                 </tr>
                 <tr>
                     <th>내용</th>
@@ -32,7 +32,7 @@
         </table>
         <div>
                 <a href="#" class="btn btnview">삭제</a>
-                <a href="/Farmstory1/board/modify.jsp?group=<%=group %>&cate=<%=cate %>" class="btn btnview">수정</a>
+                <a href="/Farmstory1/board/modify.jsp?group=<%=group %>&cate=<%=cate %>&no=<%=no %>" class="btn btnview">수정</a>
                 <a href="/Farmstory1/board/list.jsp?group=<%=group %>&cate=<%=cate %>&pg=<%= pg %>" class="btn btnview">목록</a>
         </div>
         

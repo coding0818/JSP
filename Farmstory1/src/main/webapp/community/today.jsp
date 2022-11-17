@@ -17,7 +17,7 @@
      </aside>
      <article>
        <nav>
-         <img src="../img/sub_nav_tit_cate5_tit2.png" alt="찾아오시는길">
+         <img src="../img/sub_nav_tit_cate5_chef.png" alt="찾아오시는길">
          <p>
            HOME > 커뮤니티 > <span>오늘의식단</span>
          </p>

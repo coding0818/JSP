@@ -73,7 +73,17 @@ public class Sql {
 														+ "USING(`uid`) "
 														+ "WHERE `parent`<>0 ORDER BY `no` DESC LIMIT 1;";
 	
+	public static final String SELECT_LATESTS = "(SELECT `no`,`title`,`rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`,`title`,`rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`,`title`,`rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5)";
+	public static final String SELECT_LATEST = "SELECT `no`,`title`,`rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 3";
+			
+	
 	public static final String SELECT_MODIFY_ARTICLE = "select * from `board_article` where `no`=?";
+	
+	
 	
 	public static final String UPDATE_ARTICLE = "update `board_article` set "
 												+"`title`=?, "
