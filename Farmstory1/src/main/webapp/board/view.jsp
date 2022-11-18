@@ -183,10 +183,12 @@
                 <p class="content">
                     <%= comment.getContent() %>
                 </p>
+                <% if(sessUser.getUid().equals(comment.getUid())){ %>
                 <div>
                     <a href="#" class="remove" data-no="<%= comment.getNo()%>" data-parent="<%= comment.getParent()%>">삭제</a>
                     <a href="#" class="modify" data-no="<%= comment.getNo()%>">수정</a>
                 </div>
+                <% } %>
             </article>
             <% } %>
 
