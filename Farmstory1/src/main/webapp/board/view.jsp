@@ -167,8 +167,10 @@
                 </tr>
         </table>
         <div>
-                <a href="#" class="btn btnview">삭제</a>
-                <a href="/Farmstory1/board/modify.jsp?group=<%=group %>&cate=<%=cate %>&no=<%=no %>&pg=<%= pg %>" class="btn btnview">수정</a>
+        	<% if(sessUser.getUid().equals(article.getUid())){ %>
+                <a href="/Farmstory1/board/proc/deleteProc.jsp?group=<%=group %>&cate=<%=cate %>&no=<%=no %>&pg=<%= pg %>" class="btn btnRemove">삭제</a>
+                <a href="/Farmstory1/board/modify.jsp?group=<%=group %>&cate=<%=cate %>&no=<%=no %>&pg=<%= pg %>" class="btn btnmodify">수정</a>
+            <% } %>
                 <a href="/Farmstory1/board/list.jsp?group=<%=group %>&cate=<%=cate %>&pg=<%= pg %>" class="btn btnview">목록</a>
         </div>
         

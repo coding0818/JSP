@@ -287,6 +287,52 @@ public class ArticleDAO extends DBHelper{
 		}
 		return result;
 	}
-	public void deleteArticle() {}
+	public int deleteArticle(String no, String cate) {
+		int result = 0;
+		try {
+			logger.info("deleteArticle...");
+			conn = getConnection();
+			
+			psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, cate);			
+			result = psmt.executeUpdate();
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	public String deleteFile(String no) {
+		String newName = null;
+		
+		try{
+			logger.info("deleteFile...");
+			conn = getConnection();
+			
+			conn.setAutoCommit(false);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.SELECT_FILE);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.DELETE_FILE);
+			psmt1.setString(1, no);
+			psmt2.setString(1, no);
+			
+			ResultSet rs = psmt1.executeQuery();
+			psmt2.executeUpdate();
+			
+			conn.commit();
+			
+			if(rs.next()) {
+				newName = rs.getString(3);
+			}
+			
+			psmt2.close();
+			conn.close();
+			
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		
+		return newName;
+	}
 	
 }
