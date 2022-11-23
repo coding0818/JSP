@@ -22,7 +22,9 @@ public class Sql {
 	public static final String SELECT_COUNT_NICK = "select count(`nick`) from `board_user` where `nick`=?";
 	
 	public static final String SELECT_USER_FOR_FIND_ID = "select * from `board_user` where `name`=? and `email`=?";
+	public static final String SELECT_USER_FOR_FIND_PW = "select * from `board_user` where `uid`=? and `email`=?";
 	
+	public static final String UPDATE_USER_PASSWORD = "update `board_user` set `pass`=SHA(?,256) where `uid`=?";
 	
 	// board
 	public static final String INSERT_ARTICLE = "insert into `board_article` set"
