@@ -35,7 +35,12 @@ public enum UserService {
 	public TermsVO selectTerms() {
 		return dao.selectTerms();
 	}
-	public void selectUser() {}
+	public UserVO selectUser(String uid, String pass) {
+		return dao.selectUser(uid, pass);
+	}
+	public UserVO selectUserForFindId(String name, String email) {
+		return dao.selectUserForFindId(name, email);
+	}
 	public int selectCountUser(String uid) {
 		return dao.selectCountUser(uid);
 	}
@@ -97,4 +102,6 @@ public enum UserService {
 		int result[] = {status, code};
 		return result;
 	}
+
+	
 }

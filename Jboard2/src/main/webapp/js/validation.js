@@ -180,7 +180,7 @@ $(function(){
 		
 		console.log('here2');
 		
-		
+		$('.resultEmail').text('인증코드 전송 중 입니다. 잠시만 기다리세요...');
 		
 		$.ajax({
 			url:'/Jboard2/user/emailAuth.do',
