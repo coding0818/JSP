@@ -1,7 +1,6 @@
 package kr.co.jboard2.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -42,10 +41,9 @@ public class ListController extends HttpServlet{
 		int lastPageNum = service.getLastPageNum(total);
 		// 현재 페이지 게시물 limitStart 값 계산
 		if(pg != null) {
+			currentPage = Integer.parseInt(pg);
 			limitStart = service.getLimitStart(pg);
 		}
-		
-		
 		
 		
 		// 페이지 그룹 계산

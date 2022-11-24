@@ -295,7 +295,10 @@ footer > p {
 }
 #board > .list > .page > .prev {}
 #board > .list > .page > .next {}
-#board > .list > .page > .num {}
+#board > .list > .page > .num {
+	border: 1px solid #d7d7d7;
+    background: #f2f2f2;
+}
 #board > .list > .page > .current {
     border: 1px solid #6d6d6d;
     background: #888;

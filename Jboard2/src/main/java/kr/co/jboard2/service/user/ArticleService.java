@@ -2,8 +2,6 @@ package kr.co.jboard2.service.user;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import kr.co.jboard2.dao.ArticleDAO;
 import kr.co.jboard2.vo.ArticleVO;
@@ -15,15 +13,35 @@ public enum ArticleService {
 	private ArticleService() {
 		dao = new ArticleDAO();
 	}
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	public int insertArticle(ArticleVO article) {
+		return dao.insertArticle(article);
+	}
+	
+	public void insertFile(int parent, String newName, String fname) {
+		dao.insertFile(parent, newName, fname);
+	}
+	
+	public ArticleVO insertComment(ArticleVO vo) {
+		return dao.insertComment(vo);
+	}
+	
+	public ArticleVO selectArticle(String no) {
+		return dao.selectArticle(no);
+	}
 	
 	public List<ArticleVO> selectArticles(int limitStart) {
 		return dao.selectArticles(limitStart);
+	}
+	public List<ArticleVO> selectComments(String no) {
+		return dao.selectComments(no);
 	}
 	
 	public int selectCountTotal() {
 		return dao.selectCountTotal();
 	}
+	
+
 	
 	public int getLastPageNum(int total) {
 		int lastPageNum = 0;
