@@ -10,7 +10,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.co.jboard2.vo.UserVO;
 
-@WebFilter("/*")
+
 public class LoginCheckFilter implements Filter{
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -41,25 +40,40 @@ public class LoginCheckFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-		logger.info("LoginChechFilter doFilter...");
+		logger.info("LoginChechFilter doFilter...0");
 		
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
 		
 		String uri = req.getRequestURI();
 		
+		HttpSession sess = req.getSession();
+		UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
+		
+		logger.info("LoginChechFilter doFilter...1");
+		
 		if(uriList.contains(uri)) {
-			HttpSession sess = req.getSession();
-			UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
 			
+			logger.info("LoginChechFilter doFilter...2");
+			// 로그인을 하지 않았을 경우
 			if(sessUser == null) {
+				logger.info("LoginChechFilter doFilter...3");
 				resp.sendRedirect("/Jboard2/user/login.do");
 				return;
 			}
+		}else if(uri.contains("/user/login.do")) {
+			logger.info("LoginChechFilter doFilter...4");
+			// 로그인을 했을 경우
+			if(sessUser != null) {
+				logger.info("LoginChechFilter doFilter...5");
+				resp.sendRedirect("/Jboard2/list.do");
+				return;
+			}
+			
 		}
 		
-		
-		chain.doFilter(req, resp);
+		logger.info("LoginChechFilter doFilter...6");
+		chain.doFilter(request, response);
 	}
 
 }

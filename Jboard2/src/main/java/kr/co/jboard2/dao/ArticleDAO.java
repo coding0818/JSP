@@ -78,9 +78,9 @@ public class ArticleDAO extends DBHelper{
 			stmt = conn.createStatement();
 			
 			psmt1.setInt(1, vo.getParent());
-			psmt1.setString(1, vo.getContent());
-			psmt1.setString(1, vo.getUid());
-			psmt1.setString(1, vo.getRegip());
+			psmt1.setString(2, vo.getContent());
+			psmt1.setString(3, vo.getUid());
+			psmt1.setString(4, vo.getRegip());
 			
 			psmt2.setInt(1, vo.getParent());
 			
@@ -92,7 +92,7 @@ public class ArticleDAO extends DBHelper{
 			
 			if(rs.next()) {
 				comment = new ArticleVO();
-				comment.setNo(1);
+				comment.setNo(rs.getInt(1));
 				comment.setParent(rs.getInt(2));
 				comment.setContent(rs.getString(6));
 				comment.setRdate(rs.getString(11).substring(2, 10));
@@ -173,7 +173,7 @@ public class ArticleDAO extends DBHelper{
 	public List<ArticleVO> selectComments(String no) {
 		List<ArticleVO> comments = new ArrayList<>();
 		try {
-			logger.info("selectCommetns...");
+			logger.info("selectComments...");
 			
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_COMMENTS);
@@ -220,5 +220,85 @@ public class ArticleDAO extends DBHelper{
 			logger.error(e.getMessage());
 		}
 		return total;
+	}
+	
+	public void updateArticle(String title, String content, String no) {
+		
+		try {
+			logger.info("updateArticle...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			psmt.executeUpdate();
+			
+			close();
+			
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+	}
+	
+	public int updateComment(String no, String content) {
+		int result = 0;
+		try {
+			logger.info("updateComment...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setString(2, no);
+			result = psmt.executeUpdate();
+			
+			close();
+			
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
+	public void deleteArticle(String no) {
+		try {
+			logger.info("deleteArticle...");
+			
+			conn = getConnection();
+			
+			psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			
+			psmt.executeUpdate();
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	public int deleteComment(String no, String parent) {
+		int result = 0;
+		try {
+			logger.info("deleteComment...");
+			
+			conn = getConnection();
+			
+			conn.setAutoCommit(false);
+			psmt = conn.prepareStatement(Sql.DELETE_COMMENT);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_MINUS);
+			psmt.setString(1, no);
+			psmt.setString(2, parent);
+			
+			result = psmt.executeUpdate();
+			psmt2.executeUpdate();
+			conn.commit();
+			
+			close();
+			
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 }

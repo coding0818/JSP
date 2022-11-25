@@ -1,22 +1,23 @@
-package kr.co.jboard2.controller.user;
+package kr.co.jboard2.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.jboard2.service.UserService;
-import kr.co.jboard2.vo.TermsVO;
+import com.google.gson.JsonObject;
 
-@WebServlet("/user/terms.do")
-public class TermsController extends HttpServlet{
+import kr.co.jboard2.service.ArticleService;
+
+@WebServlet("/commentModify.do")
+public class CommentModify extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-	private UserService service = UserService.INSTANCE;
+	private ArticleService service = ArticleService.INSTANCE;
 
 	@Override
 	public void init() throws ServletException {
@@ -25,14 +26,20 @@ public class TermsController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		TermsVO vo = service.selectTerms();
-		req.setAttribute("vo", vo);
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/terms.jsp");
-		dispatcher.forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		String no = req.getParameter("no");
+		String content = req.getParameter("content");
+				
+		int result = service.updateComment(no, content);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(json.toString());
 		
 	}
 }

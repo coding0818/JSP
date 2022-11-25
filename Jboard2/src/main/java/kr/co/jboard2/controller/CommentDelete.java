@@ -1,4 +1,4 @@
-package kr.co.jboard2.controller.user;
+package kr.co.jboard2.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 
-import kr.co.jboard2.service.UserService;
+import kr.co.jboard2.service.ArticleService;
 
-@WebServlet("/user/emailAuth.do")
-public class EmailAuthController extends HttpServlet{
+@WebServlet
+public class CommentDelete extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-	private UserService service = UserService.INSTANCE;
-
+	private ArticleService service = ArticleService.INSTANCE;
+	
 	@Override
 	public void init() throws ServletException {
 		
@@ -26,18 +26,17 @@ public class EmailAuthController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String email = req.getParameter("email");
-		int[] result = service.sendEmailCode(email);
+		String no = req.getParameter("no");
+		String parent = req.getParameter("parent");
 		
-		// JSON 출력
+		int result = service.deleteComment(no, parent);
+		
 		JsonObject json = new JsonObject();
-		json.addProperty("status", result[0]);
-		json.addProperty("code", result[1]);
+		json.addProperty("result", result);
 		
 		PrintWriter writer = resp.getWriter();
 		writer.print(json.toString());
-	}	
-	
+	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		

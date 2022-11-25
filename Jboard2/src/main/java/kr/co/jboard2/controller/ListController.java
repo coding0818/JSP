@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.jboard2.service.user.ArticleService;
+import kr.co.jboard2.service.ArticleService;
 import kr.co.jboard2.vo.ArticleVO;
 
 @WebServlet("/list.do")
@@ -31,9 +31,6 @@ public class ListController extends HttpServlet{
 		// 게시판 목록 처리 관련 변수 선언
 		int limitStart = 0;
 		int currentPage = 1;
-		int pageGroupCurrent = 1;
-		int pageGroupStart = 1;
-		int pageGroupEnd = 0;
 		int pageStartNum = 0;
 		
 		int total = service.selectCountTotal();
@@ -47,13 +44,7 @@ public class ListController extends HttpServlet{
 		
 		
 		// 페이지 그룹 계산
-		pageGroupCurrent = (int)Math.ceil(currentPage/10.0);
-		pageGroupStart = (pageGroupCurrent - 1) * 10 + 1;
-		pageGroupEnd = pageGroupCurrent * 10;
-		
-		if(pageGroupEnd > lastPageNum) {
-			pageGroupEnd = lastPageNum;
-		}
+		int[] result = service.getPageGroupNum(currentPage, lastPageNum);
 		
 		// 페이지 시작 번호 계산
 		pageStartNum = total - limitStart;
@@ -77,10 +68,9 @@ public class ListController extends HttpServlet{
 		req.setAttribute("currentPage", currentPage);
 		req.setAttribute("total", total);
 		req.setAttribute("lastPageNum", lastPageNum);
-		req.setAttribute("pageGroupCurrent", pageGroupCurrent);
-		req.setAttribute("pageGroupStart", pageGroupStart);
-		req.setAttribute("pageGroupEnd", pageGroupEnd);
-		req.setAttribute("pageStartNum", pageStartNum);
+		req.setAttribute("pageGroupStart", result[0]);
+		req.setAttribute("pageGroupEnd", result[1]);
+		req.setAttribute("pageStartNum", pageStartNum+1);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/list.jsp");
 		dispatcher.forward(req, resp);
