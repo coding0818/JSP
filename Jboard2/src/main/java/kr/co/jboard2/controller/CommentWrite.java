@@ -60,7 +60,7 @@ public class CommentWrite extends HttpServlet{
 		json.addProperty("date", vo.getRdate());
 		json.addProperty("content", vo.getContent());
 		
-		
+		resp.setContentType("text/html;charset=UTF-8");
 		PrintWriter writer = resp.getWriter();
 		String jsonData = json.toString();
 		

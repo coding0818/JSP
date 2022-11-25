@@ -110,7 +110,6 @@
 				url:'/Jboard2/commentWrite.do',
 				method:'post',
 				data:jsonData,
-				contentType :"application/json; charset:UTF-8",
 				dataType:'json',
 				success:function(data){
 					console.log('here4 : ' + data);
