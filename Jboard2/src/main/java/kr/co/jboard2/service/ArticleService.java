@@ -41,12 +41,15 @@ public enum ArticleService {
 	public List<ArticleVO> selectArticles(int limitStart) {
 		return dao.selectArticles(limitStart);
 	}
+	public List<ArticleVO> selectArticlesByKeyword(String keyword, int start) {
+		return dao.selectArticlesByKeyword(keyword, start);
+	}
 	public List<ArticleVO> selectComments(String no) {
 		return dao.selectComments(no);
 	}
 	
-	public int selectCountTotal() {
-		return dao.selectCountTotal();
+	public int selectCountTotal(String search) {
+		return dao.selectCountTotal(search);
 	}
 	
 	public int updateComment(String no, String content) {
@@ -55,6 +58,9 @@ public enum ArticleService {
 	
 	public void updateArticle(String title, String content, String no) {
 		dao.updateArticle(title, content, no);
+	}
+	public void updateArticleHit(String no) {
+		dao.updateArticleHit(no);
 	}
 	
 	public void deleteArticle(String no) {
@@ -125,5 +131,9 @@ public enum ArticleService {
 		int[] result = {pageGroupStart, pageGroupEnd};
 		
 		return result;
+	}
+	
+	public int getStartNum(int currentPage) {
+		return (currentPage - 1)*10;
 	}
 }

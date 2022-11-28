@@ -27,13 +27,15 @@ public class ListController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String pg = req.getParameter("pg");
+		String search = req.getParameter("search");
+		
 		
 		// 게시판 목록 처리 관련 변수 선언
 		int limitStart = 0;
 		int currentPage = 1;
 		int pageStartNum = 0;
 		
-		int total = service.selectCountTotal();
+		int total = service.selectCountTotal(search);
 		// 페이지 마지막 번호 계산
 		int lastPageNum = service.getLastPageNum(total);
 		// 현재 페이지 게시물 limitStart 값 계산
@@ -48,22 +50,16 @@ public class ListController extends HttpServlet{
 		
 		// 페이지 시작 번호 계산
 		pageStartNum = total - limitStart;
+		int start = service.getStartNum(currentPage);
 		
-		/*
-		List<Integer> pageNum = new ArrayList<>();
-		pageNum.add(limitStart);
-		pageNum.add(currentPage);
-		pageNum.add(total);
-		pageNum.add(lastPageNum);
-		pageNum.add(pageGroupCurrent);
-		pageNum.add(pageGroupStart);
-		pageNum.add(pageGroupEnd);
-		pageNum.add(pageStartNum);
-		*/
+		List<ArticleVO> articles = null;
+		if(search == null) {
+			articles = service.selectArticles(limitStart);	
+		}else {
+			articles = service.selectArticlesByKeyword(search, start);	
+		}
 		
-		List<ArticleVO> articles = service.selectArticles(limitStart);
 		req.setAttribute("articles", articles);
-		
 		req.setAttribute("limitStart", limitStart);
 		req.setAttribute("currentPage", currentPage);
 		req.setAttribute("total", total);
@@ -71,6 +67,7 @@ public class ListController extends HttpServlet{
 		req.setAttribute("pageGroupStart", result[0]);
 		req.setAttribute("pageGroupEnd", result[1]);
 		req.setAttribute("pageStartNum", pageStartNum+1);
+		req.setAttribute("search", search);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/list.jsp");
 		dispatcher.forward(req, resp);

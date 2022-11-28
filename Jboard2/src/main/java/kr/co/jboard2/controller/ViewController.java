@@ -29,6 +29,7 @@ public class ViewController extends HttpServlet{
 		String no = req.getParameter("no");
 		String pg = req.getParameter("pg");
 		
+		service.updateArticleHit(no);
 		ArticleVO vo = service.selectArticle(no);
 		List<ArticleVO> comments = service.selectComments(no);
 		
