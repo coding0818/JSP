@@ -2,7 +2,7 @@
 <jsp:include page="../_header.jsp"/>
         <main id="user">
             <section class="login">
-                <form action="../list.html">
+                <form action="/Farmstory2/user/login.do" method="post">
                     <table border="0">
                         <tr>
                             <td><img src="/Farmstory2/user/img/login_ico_id.png" alt="아이디"/></td>

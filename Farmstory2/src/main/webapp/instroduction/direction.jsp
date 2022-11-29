@@ -16,7 +16,7 @@
       <nav>
         <img src="../img/sub_nav_tit_cate1_tit1.png" alt>
         <p>
-          HOME > 팜스토리소개 > <span>인사말</span>
+          HOME > 팜스토리소개 > <em>인사말</em>
         </p>
       </nav>
        <p>

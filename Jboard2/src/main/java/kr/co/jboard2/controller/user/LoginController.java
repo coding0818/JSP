@@ -31,10 +31,6 @@ public class LoginController extends HttpServlet{
 		String success = req.getParameter("success");
 		req.setAttribute("success", success);
 		
-		HttpSession sess = req.getSession();
-		
-		UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
-		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/login.jsp");
 		dispatcher.forward(req, resp);
 		

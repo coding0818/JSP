@@ -1,4 +1,4 @@
-package kr.co.jboard2.filter;
+package kr.co.farmstory2.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,26 +17,23 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kr.co.jboard2.vo.UserVO;
-
+import kr.co.farmstory2.vo.UserVO;
 
 public class LoginCheckFilter implements Filter{
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private List<String> uriList;
-
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		
 		uriList = new ArrayList<>();
-		uriList.add("/Jboard2/list.do");
-		uriList.add("/Jboard2/write.do");
-		uriList.add("/Jboard2/modify.do");
-		uriList.add("/Jboard2/view.do");
-		
+		uriList.add("/Farmstory2/board/list.do");
+		uriList.add("/Farmstory2/board/write.do");
+		uriList.add("/Farmstory2/board/modify.do");
+		uriList.add("/Farmstory2/board/view.do");
 	}
-	
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
@@ -53,26 +50,24 @@ public class LoginCheckFilter implements Filter{
 		logger.info("LoginCheckFilter doFilter...1");
 		
 		if(uriList.contains(uri)) {
-			
 			logger.info("LoginCheckFilter doFilter...2");
+			
 			// 로그인을 하지 않았을 경우
 			if(sessUser == null) {
 				logger.info("LoginCheckFilter doFilter...3");
-				resp.sendRedirect("/Jboard2/user/login.do");
+				resp.sendRedirect("/Farmstory2/user/login.do");
 				return;
 			}
 		}else if(uri.contains("/user/login.do")) {
-			logger.info("LoginChechFilter doFilter...4");
+			logger.info("LoginCheckFilter doFilter...4");
 			// 로그인을 했을 경우
 			if(sessUser != null) {
-				logger.info("LoginChechFilter doFilter...5");
-				resp.sendRedirect("/Jboard2/list.do");
+				logger.info("LoginCheckFilter doFilter...5");
+				resp.sendRedirect("/Farmstory2/board/list.do");
 				return;
 			}
-			
 		}
-		
-		logger.info("LoginChechFilter doFilter...6");
+		logger.info("LoginCheckFilter doFilter...6");
 		chain.doFilter(request, response);
 	}
 

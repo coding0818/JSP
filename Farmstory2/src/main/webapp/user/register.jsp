@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../_header.jsp"/>
+<script src="/Farmstory2/js/validation.js"></script>
         <main id="user">
             <section class="register">
 
-                <form action="#">
+                <form action="/Farmstory2/user/register.do" method="post">
                     <table border="1">
                         <caption>사이트 이용정보 입력</caption>
                         <tr>

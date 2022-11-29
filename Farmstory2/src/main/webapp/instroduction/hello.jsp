@@ -16,7 +16,7 @@
       <nav>
         <img src="/Farmstory2/img/sub_nav_tit_cate1_tit1.png" alt="찾아오시는길">
         <p>
-          HOME > 팜스토리소개 > <span>인사말</span>
+          HOME > 팜스토리소개 > <em>인사말</em>
         </p>
       </nav>
       <img src="/Farmstory2/img/sub_page1_article_txt.png" alt="건강한 먹거리를 위해 노력합니다.">
