@@ -1,8 +1,40 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../_header.jsp"/>
+<script src="/Jboard2/js/emailAuth.js"></script>
+<script>
+	$(function(){
+		$('.btnNext').click(function(e){
+			e.preventDefault();
+			
+			if(!isEmailAuthOk){
+				alert('이메일 인증을 하세요.');
+				return;
+			}
+			
+			let name = $('input[name=name]').val();
+			let email = $('input[name=email]').val();
+			
+			let jsonData = {"name":name, "email":email};
+			
+			$.ajax({
+				url:'/Farmstory2/user/findId.do',
+				type:'post',
+				data:jsonData,
+				dataType:'json',
+				success:function(data){
+					if(data.result > 0){
+						location.href = "/Farmstory2/user/findIdResult.do";
+					}else{
+						alert('일치하는 회원이 없습니다.\n이름과 이메일을 확인해주세요.');
+					}
+				}
+			});
+		});
+	});
+</script>
         <main id="user">
             <section class="find findId">
-                <form action="#">
+                <form action="/Farmstory2/user/findId.do">
                     <table border="0">
                         <caption>아이디 찾기</caption>
                         <tr>
@@ -31,8 +63,8 @@
                 </p>
 
                 <div>
-                    <a href="./login.html" class="btn btnCancel">취소</a>
-                    <a href="./findIdResult.html" class="btn btnNext">다음</a>
+                    <a href="/Farmstory2/user/login.do" class="btn btnCancel">취소</a>
+                    <a href="/Farmstory2/user/findIdResult.do" class="btn btnNext">다음</a>
                 </div>
             </section>
         </main>

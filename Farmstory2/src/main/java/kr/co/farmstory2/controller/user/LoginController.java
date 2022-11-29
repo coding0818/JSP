@@ -60,7 +60,7 @@ public class LoginController extends HttpServlet{
 				
 			}
 			
-			resp.sendRedirect("/Farmstory2/list.do");
+			resp.sendRedirect("/Farmstory2/index.do");
 			
 		}else {
 			// 회원이 아닌 경우

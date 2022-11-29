@@ -9,10 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.farmstory2.service.UserService;
+
 @WebServlet("/user/findPwChange.do")
 public class FindPwChangeController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
+	private UserService service = UserService.INSTANCE;
+	
 	@Override
 	public void init() throws ServletException {
 		super.init();
@@ -24,6 +28,9 @@ public class FindPwChangeController extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String uid = req.getParameter("uid");
+		String pass = req.getParameter("pass");
 		
+		int result = service.updateUserPassword(uid, pass);
 	}
 }

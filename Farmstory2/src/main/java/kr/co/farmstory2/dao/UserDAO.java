@@ -99,6 +99,70 @@ public class UserDAO extends DBHelper{
 		return user;
 	}
 	
+	public UserVO selectUserForFindId(String name, String email) {
+		UserVO user = null;
+		try {
+			logger.info("selectUserForFindId...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER_FOR_FIND_ID);
+			psmt.setString(1, name);
+			psmt.setString(2, email);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				user = new UserVO();
+				user.setUid(rs.getString(1));
+				user.setPass(rs.getString(2));
+				user.setName(rs.getString(3));
+				user.setNick(rs.getString(4));
+				user.setEmail(rs.getString(5));
+				user.setHp(rs.getString(6));
+				user.setGrade(rs.getInt(7));
+				user.setZip(rs.getString(8));
+				user.setAddr1(rs.getString(9));
+				user.setAddr2(rs.getString(10));
+				user.setRegip(rs.getString(11));
+				user.setRdate(rs.getString(12));
+			}
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return user;
+	}
+	
+	public UserVO selectUserForFindPw(String uid, String email) {
+		UserVO user = null;
+		try {
+			logger.info("selectUserForFindPw...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER_FOR_FIND_PW);
+			psmt.setString(1, uid);
+			psmt.setString(2, email);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				user = new UserVO();
+				user.setUid(rs.getString(1));
+				user.setPass(rs.getString(2));
+				user.setName(rs.getString(3));
+				user.setNick(rs.getString(4));
+				user.setEmail(rs.getString(5));
+				user.setHp(rs.getString(6));
+				user.setGrade(rs.getInt(7));
+				user.setZip(rs.getString(8));
+				user.setAddr1(rs.getString(9));
+				user.setAddr2(rs.getString(10));
+				user.setRegip(rs.getString(11));
+				user.setRdate(rs.getString(12));
+			}
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return user;
+	}
+	
 	public TermsVO selectTerms() {
 		TermsVO vo = null;
 		try {
@@ -148,5 +212,23 @@ public class UserDAO extends DBHelper{
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
+	}
+	
+	public int updateUserPassword(String uid, String pass) {
+		int result = 0;
+		try {
+			logger.info("updateUserPassword...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_USER_PASSWORD);
+			psmt.setString(1, uid);
+			psmt.setString(2, pass);
+			result = psmt.executeUpdate();
+			
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 }
