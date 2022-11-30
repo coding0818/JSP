@@ -3,7 +3,6 @@ package kr.co.farmstory2.controller.board;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.farmstory2.service.ArticleService;
 import kr.co.farmstory2.vo.ArticleVO;
 
-@WebServlet("/board/view.do")
-public class ViewController extends HttpServlet{
-
+@WebServlet("/board/getLatests.do")
+public class GetLatestsController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private ArticleService service = ArticleService.INSTANCE;
 	
@@ -25,23 +23,24 @@ public class ViewController extends HttpServlet{
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String cate = req.getParameter("cate");
-		String group = req.getParameter("group");
-		String no = req.getParameter("no");
-		String pg = req.getParameter("pg");
+		String cate1 = req.getParameter("cate1");
+		String cate2 = req.getParameter("cate2");
+		String cate3 = req.getParameter("cate3");
 		
-		service.updateArticleHit(no);
-		ArticleVO vo = service.selectArticle(no, cate);
-		List<ArticleVO> comments = service.selectComments(no);
+		List<ArticleVO> latests = service.selectLatests(cate1, cate2, cate3);
+	
+		if(latests.size() < 15) {
+			ArticleVO vo = new ArticleVO();
+			vo.setNo(0);
+			vo.setTitle("무제");
+			vo.setRdate("00-00-00");
+			
+			for(int i=0; i<15; i++) {
+				latests.add(vo);
+			}
+		}
 		
-		req.setAttribute("cate", cate);
-		req.setAttribute("group", group);
-		req.setAttribute("vo", vo);
-		req.setAttribute("comments", comments);
-		req.setAttribute("pg", pg);
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/board/view.jsp");
-		dispatcher.forward(req, resp);
+		req.setAttribute("latests", latests);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

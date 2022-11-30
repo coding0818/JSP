@@ -4,29 +4,28 @@
 <main id="board">
     <section class="modify">
 
-        <form action="#">
+        <form action="/Farmstory2/board/modify.do" method="post">
+        <input type="hidden" name="no" value="${no}">
+    	<input type="hidden" name="pg" value="${pg}">
+    	<input type="hidden" name="group" value="${group}">
+    	<input type="hidden" name="cate" value="${cate}">
             <table border="0">
                 <caption>글수정</caption>
                 <tr>
                     <th>제목</th>
-                    <td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
+                    <td><input type="text" name="title" value="${vo.title}"/></td>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td>
-                        <textarea name="content"></textarea>
+                        <textarea name="content">${vo.content}</textarea>
                     </td>
                 </tr>
-                <tr>
-                    <th>파일</th>
-                    <td>
-                        <input type="file" name="file"/>
-                    </td>
-                </tr>
+              
             </table>
             
             <div>
-                <a href="./view.html" class="btn btnCancel">취소</a>
+                <a href="/Farmstory2/board/view.do?no=${no}&pg=${pg}&group=${group}&cate=${cate}" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>

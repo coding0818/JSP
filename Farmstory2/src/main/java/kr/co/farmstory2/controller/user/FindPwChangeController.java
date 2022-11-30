@@ -1,6 +1,7 @@
 package kr.co.farmstory2.controller.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.JsonObject;
 
 import kr.co.farmstory2.service.UserService;
 
@@ -32,5 +35,12 @@ public class FindPwChangeController extends HttpServlet{
 		String pass = req.getParameter("pass");
 		
 		int result = service.updateUserPassword(uid, pass);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(json.toString());
+				
 	}
 }

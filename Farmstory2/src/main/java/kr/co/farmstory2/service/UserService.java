@@ -48,6 +48,14 @@ public enum UserService {
 		return dao.selectUserForFindPw(uid, email);
 	}
 	
+	public int selectCountUser(String uid) {
+		return dao.selectCountUser(uid);
+	}
+	
+	public int selectCountNick(String nick) {
+		return dao.selectCountNick(nick);
+	}
+	
 	public TermsVO selectTerms() {
 		return dao.selectTerms();
 	}

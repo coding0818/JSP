@@ -1,5 +1,30 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="./_header.jsp"/>
+<script>
+$(function(){
+	
+	// 공지사항 최신글 가져오기
+	$.get('/Farmstory2/board/getLatests.do?cate=notice', function(data){
+		for(let latest of data){
+			let url = "/Farmstory2/board/view.do?group=community&cate=notice&no="+latest.no+"&pg=1";
+			$('#tabs-1 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+		}
+	});
+	$.get('/Farmstory2/board/getLatests.do?cate=qna', function(data){
+		for(let latest of data){
+			let url = "/Farmstory2/board/view.do?group=community&cate=qna&no="+latest.no+"&pg=1";
+			$('#tabs-2 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+		}
+	});
+	$.get('/Farmstory2/board/getLatests.do?cate=fna', function(data){
+		for(let latest of data){
+			let url = "/Farmstory2/board/view.do?group=community&cate=fna&no="+latest.no+"&pg=1";
+			$('#tabs-3 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+		}
+	});
+});
+</script>
 <main>
     <div class="slider">
         <ul>
@@ -89,31 +114,13 @@
             <a href="#"><img src="/Farmstory2/img/main_latest3_tit.png" alt="농작물 이야기"/></a>
             <img src="/Farmstory2/img/main_latest3_img.jpg" alt="이미지"/>
             <table border="0">
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
+            	<c:forEach var="latest" begin="10" end="14" items="${latests}">
+					 <tr>
+	                    <td>></td>
+	                    <td><a href="#">${latest.title}</a></td>
+	                    <td>${latest.rdate}</td>
+	                </tr>            	
+            	</c:forEach>
             </table>
         </div>
         
@@ -155,25 +162,13 @@
                     <li><a href="#tabs-3">자주묻는 질문</a></li>
                 </ul>
                 <div id="tabs-1">
-                    <ul class="txt">
-                        <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-                        <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-                        <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-                    </ul>
+                    <ul class="txt txt-notice"></ul>
                 </div>
                 <div id="tabs-2">
-                    <ul class="txt">
-                        <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-                        <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-                        <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-                    </ul>
+                     <ul class="txt txt-qna"></ul>
                 </div>
                 <div id="tabs-3">
-                    <ul class="txt">
-                        <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-                        <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-                        <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-                    </ul>
+                     <ul class="txt txt-fnq"></ul>
                 </div>
             </div>
         </div>
