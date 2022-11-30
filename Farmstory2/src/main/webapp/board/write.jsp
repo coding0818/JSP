@@ -4,7 +4,7 @@
 <main id="board">
     <section class="write">
 
-        <form action="#">
+        <form action="/Farmstory2/board/write.do">
             <table border="0">
                 <caption>글쓰기</caption>
                 <tr>
