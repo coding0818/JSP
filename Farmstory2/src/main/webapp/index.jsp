@@ -5,12 +5,19 @@
 $(function(){
 	
 	// 공지사항 최신글 가져오기
-	$.get('/Farmstory2/board/getLatests.do?cate=notice', function(data){
-		for(let latest of data){
-			let url = "/Farmstory2/board/view.do?group=community&cate=notice&no="+latest.no+"&pg=1";
-			$('#tabs-1 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+	$.ajax({
+		url:'/Farmstory2/board/getLatests.do?cate=notice',
+		method: 'GET',
+		dataType: 'json',		
+		success: function(data){
+			for(let latest of data){
+				let url = "/Farmstory2/board/view.do?group=community&cate=notice&no="+latest.no+"&pg=1";
+				$('#tabs-1 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+			}
 		}
 	});
+	
+	/*
 	$.get('/Farmstory2/board/getLatests.do?cate=qna', function(data){
 		for(let latest of data){
 			let url = "/Farmstory2/board/view.do?group=community&cate=qna&no="+latest.no+"&pg=1";
@@ -23,6 +30,7 @@ $(function(){
 			$('#tabs-3 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
 		}
 	});
+	*/
 });
 </script>
 <main>
@@ -52,62 +60,26 @@ $(function(){
             <a href="#"><img src="/Farmstory2/img/main_latest1_tit.png" alt="텃밭 가꾸기"/></a>
             <img src="/Farmstory2/img/main_latest1_img.jpg" alt="이미지"/>
             <table border="0">
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
+                <c:forEach var="latest" begin="0" end="4" items="${latests}">
+					 <tr>
+	                    <td>></td>
+	                    <td><a href="#">${latest.title}</a></td>
+	                    <td>${latest.rdate}</td>
+	                </tr>            	
+            	</c:forEach>
             </table>
         </div>
         <div>
             <a href="#"><img src="/Farmstory2/img/main_latest2_tit.png" alt="귀농학교"/></a>
             <img src="/Farmstory2/img/main_latest2_img.jpg" alt="이미지"/>
             <table border="0">
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
-                <tr>
-                    <td>></td>
-                    <td><a href="#">토마토! 건강하게 길러서 안심하고 먹자</a></td>
-                    <td>20-12-22</td>
-                </tr>
+                <c:forEach var="latest" begin="5" end="9" items="${latests}">
+					 <tr>
+	                    <td>></td>
+	                    <td><a href="#">${latest.title}</a></td>
+	                    <td>${latest.rdate}</td>
+	                </tr>            	
+            	</c:forEach>
             </table>
         </div>
         <div>

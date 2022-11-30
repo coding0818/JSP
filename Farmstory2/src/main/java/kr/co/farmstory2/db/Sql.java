@@ -88,6 +88,8 @@ public class Sql {
 												+ "UNION "
 												+ "(SELECT `no`,`title`,`rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5)";
 	
+	public static final String SELECT_LATEST = "SELECT `no`,`title`,`rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 3";
+	
 	public static final String SELECT_FILE = "select * from `board_file` where `parent`=?";
 	
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `board_article` AS a "

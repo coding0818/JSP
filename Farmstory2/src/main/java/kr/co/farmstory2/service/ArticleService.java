@@ -49,6 +49,10 @@ public enum ArticleService {
 		return dao.selectCountTotal(search, cate);
 	}
 	
+	public List<ArticleVO> selectLatest(String cate) {
+		return dao.selectLatest(cate);
+	}
+	
 	public List<ArticleVO> selectLatests(String cate1, String cate2, String cate3) {
 		return dao.selectLatests(cate1, cate2, cate3);
 	}

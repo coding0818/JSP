@@ -270,6 +270,29 @@ public class ArticleDAO extends DBHelper{
 		return total;
 	}
 	
+	public List<ArticleVO> selectLatest(String cate) {
+		List<ArticleVO> latests = new ArrayList<>();
+		try {
+			logger.info("selectLatests(String)...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_LATEST);
+			psmt.setString(1, cate);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				ArticleVO ab = new ArticleVO();
+				ab.setNo(rs.getInt(1));
+				ab.setTitle(rs.getString(2));
+				ab.setRdate(rs.getString(3).substring(2,10));
+				
+				latests.add(ab);
+			}
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return latests;
+	}
+	
 	public List<ArticleVO> selectLatests(String cate1, String cate2, String cate3) {
 		List<ArticleVO> latests = new ArrayList<>();
 		try {
