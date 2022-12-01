@@ -4,31 +4,50 @@
 <script>
 $(function(){
 	
+	console.log('here1');
+	
+	/*
 	// 공지사항 최신글 가져오기
 	$.ajax({
 		url:'/Farmstory2/board/getLatests.do?cate=notice',
 		method: 'GET',
+		async: false,
 		dataType: 'json',		
 		success: function(data){
+			console.log('here2');
 			for(let latest of data){
 				let url = "/Farmstory2/board/view.do?group=community&cate=notice&no="+latest.no+"&pg=1";
 				$('#tabs-1 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
 			}
 		}
 	});
-	
-	/*
-	$.get('/Farmstory2/board/getLatests.do?cate=qna', function(data){
-		for(let latest of data){
-			let url = "/Farmstory2/board/view.do?group=community&cate=qna&no="+latest.no+"&pg=1";
-			$('#tabs-2 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
-		}
+		
+	$.ajax({
+		url:'/Farmstory2/board/getLatests.do?cate=qna',
+		method:'GET',
+		async: false,
+		dataType:'json',
+		success:function(data){
+			console.log('here3');
+			for(let latest of data){
+				let url = "/Farmstory2/board/view.do?group=community&cate=qna&no="+latest.no+"&pg=1";
+				$('#tabs-2 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+			}
+		} 
 	});
-	$.get('/Farmstory2/board/getLatests.do?cate=fna', function(data){
-		for(let latest of data){
-			let url = "/Farmstory2/board/view.do?group=community&cate=fna&no="+latest.no+"&pg=1";
-			$('#tabs-3 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
-		}
+	
+	$.ajax({
+		url:'/Farmstory2/board/getLatests.do?cate=fna',
+		method:'GET',
+		async: false,
+		dataType:'json',
+		success:function(data){
+			console.log('here4');
+			for(let latest of data){
+				let url = "/Farmstory2/board/view.do?group=community&cate=fna&no="+latest.no+"&pg=1";
+				$('#tabs-3 .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+			}
+		} 
 	});
 	*/
 });
@@ -51,8 +70,8 @@ $(function(){
     </div>
 
     <div class="quick">
-        <a href="#"><img src="/Farmstory2/img/main_banner_sub1_tit.png" alt="오늘의 식단"></a>
-        <a href="#"><img src="/Farmstory2/img/main_banner_sub2_tit.png" alt="나도 요리사"></a>                
+        <a href="/Farmstory2/board/list.do?group=croptalk&cate=menu"><img src="/Farmstory2/img/main_banner_sub1_tit.png" alt="오늘의 식단"></a>
+        <a href="/Farmstory2/board/list.do?group=croptalk&cate=chef"><img src="/Farmstory2/img/main_banner_sub2_tit.png" alt="나도 요리사"></a>                
     </div>
 
     <div class="latest">
@@ -63,7 +82,7 @@ $(function(){
                 <c:forEach var="latest" begin="0" end="4" items="${latests}">
 					 <tr>
 	                    <td>></td>
-	                    <td><a href="#">${latest.title}</a></td>
+	                    <td><a href="/Farmstory2/board/view.do?group=croptalk&cate=grow&no=${latest.no}&pg=1">${latest.title}</a></td>
 	                    <td>${latest.rdate}</td>
 	                </tr>            	
             	</c:forEach>
@@ -76,7 +95,7 @@ $(function(){
                 <c:forEach var="latest" begin="5" end="9" items="${latests}">
 					 <tr>
 	                    <td>></td>
-	                    <td><a href="#">${latest.title}</a></td>
+	                    <td><a href="/Farmstory2/board/view.do?group=croptalk&cate=school&no=${latest.no}&pg=1">${latest.title}</a></td>
 	                    <td>${latest.rdate}</td>
 	                </tr>            	
             	</c:forEach>
@@ -89,7 +108,7 @@ $(function(){
             	<c:forEach var="latest" begin="10" end="14" items="${latests}">
 					 <tr>
 	                    <td>></td>
-	                    <td><a href="#">${latest.title}</a></td>
+	                    <td><a href="/Farmstory2/board/view.do?group=croptalk&cate=story&no=${latest.no}&pg=1">${latest.title}</a></td>
 	                    <td>${latest.rdate}</td>
 	                </tr>            	
             	</c:forEach>
@@ -117,7 +136,7 @@ $(function(){
             </div>
         </div>
         <div>
-            <img src="./img/main_sub2_account_tit.png" class="tit" alt="계좌안내"/>
+            <img src="/Farmstory2/img/main_sub2_account_tit.png" class="tit" alt="계좌안내"/>
             <p class="account">
                 기업은행 123-456789-01-01-012<br />
                 국민은행 01-1234-56789<br />

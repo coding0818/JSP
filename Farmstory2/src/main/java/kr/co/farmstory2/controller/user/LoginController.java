@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.farmstory2.service.UserService;
 import kr.co.farmstory2.vo.UserVO;
 
@@ -20,17 +23,26 @@ public class LoginController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	
+	
 	@Override
 	public void init() throws ServletException {
 		
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("LoginController...");
+		
 		String success = req.getParameter("success");
 		req.setAttribute("success", success);
 		
+		logger.debug("here1");
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/login.jsp");
 		dispatcher.forward(req, resp);
+		logger.debug("here2");
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

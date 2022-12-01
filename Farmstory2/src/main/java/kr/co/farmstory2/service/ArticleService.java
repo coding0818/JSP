@@ -1,9 +1,19 @@
 package kr.co.farmstory2.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.co.farmstory2.dao.ArticleDAO;
 import kr.co.farmstory2.vo.ArticleVO;
@@ -126,5 +136,33 @@ public enum ArticleService {
 	
 	public int getStartNum(int currentPage) {
 		return (currentPage - 1)*10;
+	}
+	
+	public String getSavePath(HttpServletRequest req) {
+		ServletContext application = req.getServletContext();
+		return application.getRealPath("/file");
+	}
+	
+	public MultipartRequest uploadFile(HttpServletRequest req, String savePath) throws IOException {
+		int maxSize = 1024 *1024 * 10;
+		return new MultipartRequest(req, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+	}
+	
+	public String renameFile(String fname, String uid, String savePath) {
+		
+		int i = fname.lastIndexOf(".");
+		String ext = fname.substring(i);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss_");
+		String now = sdf.format(new Date());
+		String newName = now+uid+ext;
+		
+		File f1 = new File(savePath+"/"+fname);
+		File f2 = new File(savePath+"/"+newName);
+		
+		f1.renameTo(f2);
+		
+		return newName;
+		
 	}
 }

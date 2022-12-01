@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.farmstory2.service.ArticleService;
 import kr.co.farmstory2.vo.ArticleVO;
 
@@ -19,6 +22,8 @@ public class IndexController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private ArticleService service = ArticleService.INSTANCE;
 	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Override
 	public void init() throws ServletException {
 		
@@ -26,13 +31,18 @@ public class IndexController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		logger.info("IndexController...");
+		
 		String grow = "grow";
 		String school = "school";
 		String story = "story";
 		
 		List<ArticleVO> latests = service.selectLatests(grow, school, story);
 		
+		logger.info("here1");
+		
 		if(latests.size() < 15) {
+			logger.info("here2");
 			ArticleVO vo = new ArticleVO();
 			vo.setNo(0);
 			vo.setTitle("무제");
@@ -43,8 +53,10 @@ public class IndexController extends HttpServlet{
 			}
 		}
 
+		logger.info("here3");
 		req.setAttribute("latests", latests);
 		
+		logger.info("here4");
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
 		dispatcher.forward(req, resp);
 	}

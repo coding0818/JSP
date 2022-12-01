@@ -64,6 +64,10 @@ public enum UserService {
 		dao.updateUserForSession(uid, sessId);
 	}
 	
+	public void updateUserForSessionOut(String uid) {
+		dao.updateUserForSessionOut(uid);
+	}
+	
 	public void updateUserForSessLimitDate(String sessId) {
 		dao.updateUserForSessLimitDate(sessId);
 	}

@@ -37,7 +37,7 @@ public class LoginCheckFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-		logger.info("LoginCheckFilter doFilter...0");
+		logger.info("LoginCheckFilter...");
 		
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
@@ -47,27 +47,27 @@ public class LoginCheckFilter implements Filter{
 		HttpSession sess = req.getSession();
 		UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
 		
-		logger.info("LoginCheckFilter doFilter...1");
+		logger.debug("here1");
 		
 		if(uriList.contains(uri)) {
-			logger.info("LoginCheckFilter doFilter...2");
+			logger.debug("here2");
 			
 			// 로그인을 하지 않았을 경우
 			if(sessUser == null) {
-				logger.info("LoginCheckFilter doFilter...3");
+				logger.debug("here3");
 				resp.sendRedirect("/Farmstory2/user/login.do");
 				return;
 			}
 		}else if(uri.contains("/user/login.do")) {
-			logger.info("LoginCheckFilter doFilter...4");
+			logger.debug("here4");
 			// 로그인을 했을 경우
 			if(sessUser != null) {
-				logger.info("LoginCheckFilter doFilter...5");
+				logger.debug("here5");
 				resp.sendRedirect("/Farmstory2/board/list.do");
 				return;
 			}
 		}
-		logger.info("LoginCheckFilter doFilter...6");
+		logger.debug("here6");
 		chain.doFilter(request, response);
 	}
 

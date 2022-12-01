@@ -35,6 +35,7 @@ public class Sql {
 	public static final String UPDATE_USER_FOR_SESSION_OUT = "update `board_user` set `sessId`=NULL, `sessLimitDate`=NULL where `uid=?`";
 	// board
 	public static final String INSERT_ARTICLE = "insert into `board_article` set"
+												+ "`cate`=?,"
 												+ "`title`=?,"
 												+ "`content`=?,"
 												+ "`file`=?,"
@@ -124,7 +125,7 @@ public class Sql {
 	
 	public static final String UPDATE_ARTICLE_COMMENT_MINUS = "update `board_article` set `comment`=`comment`-1 where `no`=?";
 	
-	public static final String DELETE_COMMENT = "delete from `board_article` where `no`=?";
+	public static final String DELETE_COMMENT = "delete from `board_article` where `no`=? and `parent`=?";
 	
 	public static final String DELETE_ARTICLE = "delete from `board_article` where `no`=? or `parent`=?";
 	
