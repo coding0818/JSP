@@ -12,8 +12,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>    
+    <script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
     <script>
-        $(function(){
+    	$(function(){
             $('.slider > ul').bxSlider({
                 slideWidth: 980,
                 pager: false,
@@ -22,6 +23,7 @@
             });
 
             $('#tabs').tabs();
+            
         });
     </script>
 

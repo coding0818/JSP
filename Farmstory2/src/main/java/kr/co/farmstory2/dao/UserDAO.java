@@ -46,6 +46,7 @@ public class UserDAO extends DBHelper{
 			psmt.setString(1, uid);
 			psmt.setString(2, pass);
 			rs = psmt.executeQuery();
+			
 			if(rs.next()) {
 				user = new UserVO();
 				user.setUid(rs.getString(1));

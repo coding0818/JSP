@@ -2,7 +2,7 @@
 <!DOCTYPE configuration>
 
 <configuration>
-	<property name="NAME" value="Farmstory2"/>
+	<property name="NAME" value="Farmstory3"/>
 	<import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
 	<import class="ch.qos.logback.core.ConsoleAppender"/>
 

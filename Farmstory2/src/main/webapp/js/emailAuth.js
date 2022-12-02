@@ -27,7 +27,7 @@ $(function(){
 		$('.resultEmail').text('인증코드 전송 중 입니다. 잠시만 기다리세요...');
 		
 		$.ajax({
-			url:'/Jboard2/user/emailAuth.do',
+			url:'/Farmstory2/user/emailAuth.do',
 			method:'get',
 			data:{"email":email},
 			dataType:'json',

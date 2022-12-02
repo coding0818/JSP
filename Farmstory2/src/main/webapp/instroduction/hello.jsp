@@ -8,7 +8,7 @@
     <aside>
       <img src="/Farmstory2/img/sub_aside_cate1_tit.png" alt="">
       <ul class="lnb">
-        <li class="on"><a href="./hello.html">1</a></li>
+        <li class="on"><a href="./hello.do">1</a></li>
         <li><a href="/Farmstory2/direction.do">2</a></li>
       </ul>
     </aside>

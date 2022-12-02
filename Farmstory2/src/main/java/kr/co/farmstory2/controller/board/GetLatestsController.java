@@ -39,7 +39,7 @@ public class GetLatestsController extends HttpServlet{
 		Gson gson = new Gson();
 		String jsonData = gson.toJson(latests);
 		
-		resp.setContentType("text/html;charset=UTF-8");
+		resp.setContentType("application/json;charset=UTF-8");
 		
 		PrintWriter writer = resp.getWriter();
 		writer.print(jsonData);

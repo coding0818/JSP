@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import kr.co.farmstory2.service.ArticleService;
 import kr.co.farmstory2.vo.ArticleVO;
 
+
 @WebServlet("/index.do")
 public class IndexController extends HttpServlet{
 
@@ -37,9 +38,9 @@ public class IndexController extends HttpServlet{
 		String school = "school";
 		String story = "story";
 		
-		List<ArticleVO> latests = service.selectLatests(grow, school, story);
-		
 		logger.info("here1");
+		
+		List<ArticleVO> latests = service.selectLatests(grow, school, story);
 		
 		if(latests.size() < 15) {
 			logger.info("here2");
@@ -52,7 +53,7 @@ public class IndexController extends HttpServlet{
 				latests.add(vo);
 			}
 		}
-
+		
 		logger.info("here3");
 		req.setAttribute("latests", latests);
 		

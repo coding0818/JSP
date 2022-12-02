@@ -2,6 +2,23 @@
 <jsp:include page="../_header.jsp"></jsp:include>
 <jsp:include page="./_${group}.jsp"/>
 <main id="board">
+<script>
+let oEditors = [];
+
+smartEditor = function() {
+  console.log("Naver SmartEditor");
+  nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+    elPlaceHolder: "editorTxt",
+    sSkinURI: "/smarteditor/SmartEditor2Skin.html",
+    fCreator: "createSEditor2"
+  });
+};
+
+$(function() {
+  smartEditor()
+});
+  </script>
     <section class="write">
 
         <form action="/Farmstory2/board/write.do" method="post" enctype="multipart/form-data">
@@ -17,7 +34,7 @@
                 <tr>
                     <th>내용</th>
                     <td>
-                        <textarea name="content"></textarea>
+                        <textarea rows="20" cols="10" name="content" id="editorTxt" style="width: 500px"></textarea>
                     </td>
                 </tr>
                 <tr>

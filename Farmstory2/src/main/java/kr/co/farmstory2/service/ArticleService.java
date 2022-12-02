@@ -17,6 +17,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.co.farmstory2.dao.ArticleDAO;
 import kr.co.farmstory2.vo.ArticleVO;
+import kr.co.farmstory2.vo.FileVO;
 
 public enum ArticleService {
 
@@ -67,6 +68,11 @@ public enum ArticleService {
 		return dao.selectLatests(cate1, cate2, cate3);
 	}
 	
+	public FileVO selectFile(String parent) {
+		return dao.selectFile(parent);
+	}
+	
+	
 	public int updateComment(String no, String content) {
 		return dao.updateComment(no, content);
 	}
@@ -76,6 +82,10 @@ public enum ArticleService {
 	}
 	public void updateArticleHit(String no) {
 		dao.updateArticleHit(no);
+	}
+	
+	public void updateFileDownload(int fno) {
+		dao.updateFileDownload(fno);
 	}
 	
 	public void deleteArticle(String no) {

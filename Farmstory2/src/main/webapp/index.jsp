@@ -6,7 +6,7 @@ $(function(){
 	
 	console.log('here1');
 	
-	/*
+	
 	// 공지사항 최신글 가져오기
 	$.ajax({
 		url:'/Farmstory2/board/getLatests.do?cate=notice',
@@ -49,7 +49,7 @@ $(function(){
 			}
 		} 
 	});
-	*/
+	
 });
 </script>
 <main>

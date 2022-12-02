@@ -29,6 +29,8 @@ $(function(){
 
 	$('#btnIdCheck').click(function() {
 		
+		alert('dfdf!');
+		
 		let uid = $('input[name=uid]').val();
 		
 		if(isUidOk){
@@ -48,7 +50,7 @@ $(function(){
 		$('.uidResult').css('color', 'black').text('...');	
 		setTimeout(function(){
 			$.ajax({
-				url: '/Jboard2/user/checkUid.do',
+				url: '/Farmstory2/user/checkUid.do',
 				method: 'get',
 				data: jsonData,
 				dataType: 'json',
@@ -125,7 +127,7 @@ $(function(){
 		$('.nickResult').css('color', 'black').text('...');	
 		setTimeout(function(){
 			$.ajax({
-				url: '/Jboard2/user/checkNick.do',
+				url: '/Farmstory2/user/checkNick.do',
 				method : 'get',
 				data: jsonData,
 				dataType : 'json',
@@ -183,7 +185,7 @@ $(function(){
 		$('.resultEmail').text('인증코드 전송 중 입니다. 잠시만 기다리세요...');
 		
 		$.ajax({
-			url:'/Jboard2/user/emailAuth.do',
+			url:'/Farmstory2/user/emailAuth.do',
 			method:'get',
 			data:{"email":email},
 			dataType:'json',

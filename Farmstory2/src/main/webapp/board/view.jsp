@@ -24,13 +24,21 @@
 			
 			let isDeleteOk = confirm('정말 삭제 하시겠습니까?');
 			
+			console.log('here1');
+			
 			if(isDeleteOk){
+				
+				console.log('here2');
 				
 				let article = $(this).closest('article');
 				let no = $(this).attr('data-no');
 				let parent = $(this).attr('data-parent');
 				
+				console.log('here3');
+				
 				let jsonData = {"no":no, "parent":parent};
+				
+				console.log('here4'+jsonData);
 				
 				$.ajax({
 					url:'/Farmstory2/board/commentDelete.do',
@@ -149,14 +157,7 @@
             </tr>
             <tr>
                 <th>파일</th>
-                <c:choose>
-                	<c:when test="${vo.file gt 1}">
-                		<td><a href="#">${vo.oriName}</a>&nbsp;<span>${vo.download}</span>회 다운로드</td>
-                	</c:when>
-                	<c:otherwise>
-                		<td></td>
-                	</c:otherwise>
-                </c:choose>
+                <td><a href="/Farmstory2/board/download.do?parent=${vo.no}">${vo.oriName}</a>&nbsp;<span>${vo.download}</span>회 다운로드</td>
             </tr>
             <tr>
                 <th>내용</th>

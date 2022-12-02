@@ -40,7 +40,7 @@ public class LogoutController extends HttpServlet{
 		
 		service.updateUserForSessionOut(uid);
 		
-		resp.sendRedirect("/Farmstory2/user/login.do?success=200");
+		resp.sendRedirect("/Farmstory2/");
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

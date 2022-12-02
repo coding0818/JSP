@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet{
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		logger.info("LoginController...");
+		logger.info("LoginController[GET]...");
 		
 		String success = req.getParameter("success");
 		req.setAttribute("success", success);
@@ -46,19 +46,24 @@ public class LoginController extends HttpServlet{
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		logger.info("LoginController[POST]...");
 		String uid = req.getParameter("uid");
 		String pass = req.getParameter("pass");
 		String auto = req.getParameter("auto");
 		
+		logger.debug("here1");
 		UserVO user = service.selectUser(uid, pass);
+		
+		logger.debug("here2");
 		if(user != null) {
 			// 회원이 맞을 경우
-			
+			logger.debug("here3");
 			HttpSession sess = req.getSession();
 			sess.setAttribute("sessUser", user);
 			
 			if(auto != null) {
-				
+				logger.debug("here4");
 				String sessId = sess.getId();
 				
 				// 쿠키 생성
@@ -67,15 +72,18 @@ public class LoginController extends HttpServlet{
 				cookie.setMaxAge(60*60*24*3);
 				resp.addCookie(cookie);
 				
+				logger.debug("here5");
 				// 세션아이디 데이터베이스 저장
 				service.updateUserForSession(uid, sessId);
-				
+				logger.debug("here6");
 			}
 			
+			logger.debug("here7");
 			resp.sendRedirect("/Farmstory2/index.do");
 			
 		}else {
 			// 회원이 아닌 경우
+			logger.debug("here8");
 			resp.sendRedirect("/Farmstory2/user/login.do?success=100");
 		}
 	}

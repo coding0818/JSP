@@ -1,21 +1,17 @@
 package kr.co.farmstory2.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kr.co.farmstory2.db.DBCP;
 import kr.co.farmstory2.db.DBHelper;
 import kr.co.farmstory2.db.Sql;
 import kr.co.farmstory2.vo.ArticleVO;
+import kr.co.farmstory2.vo.FileVO;
 
-public class ArticleDAO {
+public class ArticleDAO extends DBHelper {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -23,12 +19,12 @@ public class ArticleDAO {
 		int result = 0;
 		try {
 			logger.info("insertArticle...");
-			Connection conn = DBCP.getConnection();
+			conn = getConnection();
 			
 			conn.setAutoCommit(false);
 			
-			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
-			Statement stmt = conn.createStatement();
+			psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
+			stmt = conn.createStatement();
 			
 			psmt.setString(1, article.getCate());
 			psmt.setString(2, article.getTitle());
@@ -38,7 +34,7 @@ public class ArticleDAO {
 			psmt.setString(6, article.getRegip());
 			
 			psmt.executeUpdate();
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
+			rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
 			
 			conn.commit();
 			
@@ -46,6 +42,7 @@ public class ArticleDAO {
 				result = rs.getInt(1);
 			}
 			
+			close();
 			
 		}catch(Exception e) {
 			logger.error(e.getMessage());
@@ -55,15 +52,15 @@ public class ArticleDAO {
 	public void insertFile(int parent, String newName, String fname) {
 		try {
 			logger.info("insertFile...");
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_FILE);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.INSERT_FILE);
 			psmt.setInt(1, parent);
 			psmt.setString(2, newName);
 			psmt.setString(3, fname);
 			
 			psmt.executeUpdate();
 			
-			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -75,12 +72,12 @@ public class ArticleDAO {
 		try {
 			logger.info("insertComment...");
 			
-			Connection conn = DBCP.getConnection();
+			conn = getConnection();
 			
 			conn.setAutoCommit(false);
-			PreparedStatement psmt1 = conn.prepareStatement(Sql.INSERT_COMMENT);
-			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUS);
-			Statement stmt = conn.createStatement();
+			psmt1 = conn.prepareStatement(Sql.INSERT_COMMENT);
+			psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUS);
+			stmt = conn.createStatement();
 			
 			psmt1.setInt(1, vo.getParent());
 			psmt1.setString(2, vo.getContent());
@@ -91,7 +88,7 @@ public class ArticleDAO {
 			
 			psmt1.executeUpdate();
 			psmt2.executeUpdate();
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
+			rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
 			
 			conn.commit();
 			
@@ -103,7 +100,7 @@ public class ArticleDAO {
 				comment.setRdate(rs.getString(11).substring(2, 10));
 				comment.setNick(rs.getString(12));
 			}
-			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -116,11 +113,11 @@ public class ArticleDAO {
 		try {
 			logger.info("selectArticle...");
 			
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
 			psmt.setString(1, no);
 			psmt.setString(2, cate);
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			if(rs.next()) {
 				vo = new ArticleVO();
 				vo.setNo(rs.getInt(1));
@@ -134,9 +131,13 @@ public class ArticleDAO {
 				vo.setUid(rs.getString(9));
 				vo.setRegip(rs.getString(10));
 				vo.setRdate(rs.getString(11));
-				vo.setNick(rs.getString(12));
+				vo.setFno(rs.getInt(12));
+				vo.setPno(rs.getInt(13));
+				vo.setNewName(rs.getString(14));
+				vo.setOriName(rs.getString(15));
+				vo.setDownload(rs.getInt(16));
 			}
-			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -148,11 +149,11 @@ public class ArticleDAO {
 		try {
 			logger.info("selectArticles...");
 			
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
 			psmt.setString(1, cate);
 			psmt.setInt(2, start);
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			while(rs.next()) {
 				ArticleVO article = new ArticleVO();
 				article.setNo(rs.getInt(1));
@@ -170,7 +171,7 @@ public class ArticleDAO {
 				
 				articles.add(article);
 			}
-			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -183,12 +184,12 @@ public class ArticleDAO {
 		try {
 			logger.info("selectArticlesByKeyword...");
 			
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLES_BY_KEYWORD);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLES_BY_KEYWORD);
 			psmt.setString(1, "%"+keyword+"%");
 			psmt.setString(2, "%"+keyword+"%");
 			psmt.setInt(3, start);
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			while(rs.next()) {
 				ArticleVO article = new ArticleVO();
 				article.setNo(rs.getInt(1));
@@ -206,6 +207,8 @@ public class ArticleDAO {
 				
 				articles.add(article);
 			}
+			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -217,10 +220,10 @@ public class ArticleDAO {
 		try {
 			logger.info("selectComments...");
 			
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COMMENTS);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_COMMENTS);
 			psmt.setString(1, no);
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			while(rs.next()) {
 				ArticleVO comment = new ArticleVO();
 				comment.setNo(rs.getInt(1));
@@ -239,6 +242,7 @@ public class ArticleDAO {
 				comments.add(comment);
 			}
 			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -250,16 +254,16 @@ public class ArticleDAO {
 		try {
 			logger.info("selectCountTotal...");
 			
-			Connection conn = DBCP.getConnection();
+			conn = getConnection();
 			
-			ResultSet rs = null;
+			rs = null;
 			
 			if(search == null) {
-				PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL);
+				psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL);
 				psmt.setString(1, cate);
 				rs = psmt.executeQuery();	
 			}else {
-				PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_FOR_SEARCH);
+				psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_FOR_SEARCH);
 				psmt.setString(1, cate);
 				psmt.setString(2, "%"+search+"%");
 				psmt.setString(3, "%"+search+"%");
@@ -270,7 +274,7 @@ public class ArticleDAO {
 				total = rs.getInt(1);
 			}
 			
-			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -281,10 +285,10 @@ public class ArticleDAO {
 		List<ArticleVO> latests = new ArrayList<>();
 		try {
 			logger.info("selectLatests(String)...");
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_LATEST);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_LATEST);
 			psmt.setString(1, cate);
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			while(rs.next()) {
 				ArticleVO ab = new ArticleVO();
 				ab.setNo(rs.getInt(1));
@@ -294,6 +298,7 @@ public class ArticleDAO {
 				latests.add(ab);
 			}
 			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -304,12 +309,12 @@ public class ArticleDAO {
 		List<ArticleVO> latests = new ArrayList<>();
 		try {
 			logger.info("selectLatests...");
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_LATESTS);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_LATESTS);
 			psmt.setString(1, cate1);
 			psmt.setString(2, cate2);
 			psmt.setString(3, cate3);
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			while(rs.next()) {
 				ArticleVO ab = new ArticleVO();
 				ab.setNo(rs.getInt(1));
@@ -319,25 +324,55 @@ public class ArticleDAO {
 				latests.add(ab);
 			}
 			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
 		return latests;
 	}
 	
+	public FileVO selectFile(String parent) {
+		FileVO fb = null;
+		try{
+			logger.info("selectFile");
+			conn = getConnection();
+			psmt =  conn.prepareStatement(Sql.SELECT_FILE);
+			psmt.setString(1, parent);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				fb = new FileVO();
+				fb.setFno(rs.getInt(1));
+				fb.setParent(rs.getInt(2));
+				fb.setNewName(rs.getString(3));
+				fb.setOriName(rs.getString(4));
+				fb.setDownload(rs.getInt(5));
+			}
+			
+			close();
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+		
+		return fb;
+	}
+	
+	
 	public void updateArticle(String title, String content, String no) {
 		
 		try {
 			logger.info("updateArticle...");
 			
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
 			psmt.setString(1, title);
 			psmt.setString(2, content);
 			psmt.setString(3, no);
 			psmt.executeUpdate();
 			
-			
+			close();
 			
 		}catch(Exception e) {
 			logger.error(e.getMessage());
@@ -349,13 +384,13 @@ public class ArticleDAO {
 		try {
 			logger.info("updateArticleHit...");
 			
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
 			psmt.setString(1, no);
 			psmt.executeUpdate();
 			
 			
-			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -367,13 +402,13 @@ public class ArticleDAO {
 		try {
 			logger.info("updateComment...");
 			
-			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
 			psmt.setString(1, content);
 			psmt.setString(2, no);
 			result = psmt.executeUpdate();
 			
-			
+			close();
 			
 		}catch(Exception e) {
 			logger.error(e.getMessage());
@@ -381,18 +416,33 @@ public class ArticleDAO {
 		return result;
 	}
 	
+	public void updateFileDownload(int fno) {
+		try {
+			logger.info("updateFileDownload...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_FILE_DOWNLOAD);
+			psmt.setInt(1, fno);
+			psmt.executeUpdate();
+			
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
 	public void deleteArticle(String no) {
 		try {
 			logger.info("deleteArticle...");
 			
-			Connection conn = DBCP.getConnection();
+			conn = getConnection();
 			
-			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
 			psmt.setString(1, no);
 			psmt.setString(2, no);
 			
 			psmt.executeUpdate();
 			
+			close();
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -402,11 +452,11 @@ public class ArticleDAO {
 		try {
 			logger.info("deleteComment...");
 			
-			Connection conn = DBCP.getConnection();
+			conn = getConnection();
 			
 			conn.setAutoCommit(false);
-			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_COMMENT);
-			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_MINUS);
+			psmt = conn.prepareStatement(Sql.DELETE_COMMENT);
+			psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_MINUS);
 			psmt.setString(1, no);
 			psmt.setString(2, parent);
 			
@@ -416,7 +466,7 @@ public class ArticleDAO {
 			psmt2.executeUpdate();
 			conn.commit();
 			
-			
+			close();
 			
 		}catch(Exception e) {
 			logger.error(e.getMessage());

@@ -8,8 +8,8 @@
     <aside>
       <img src="../img/sub_aside_cate1_tit.png" alt="">
       <ul class="lnb">
-        <li ><a href="./hello.html">1</a></li>
-        <li class="on"><a href="./direction.html">2</a></li>
+        <li ><a href="./hello.do">1</a></li>
+        <li class="on"><a href="./direction.do">2</a></li>
       </ul>
     </aside>
     <article>

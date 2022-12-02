@@ -58,7 +58,7 @@ public class CommentWriteController extends HttpServlet{
 		json.addProperty("date", comment.getRdate());
 		json.addProperty("content", comment.getContent());
 		
-		resp.setContentType("text/html;charset=UTF-8");
+		resp.setContentType("application/json;charset=UTF-8");
 		PrintWriter writer = resp.getWriter();
 		writer.print(json.toString());
 	}

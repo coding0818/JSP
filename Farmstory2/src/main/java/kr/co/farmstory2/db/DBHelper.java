@@ -11,6 +11,8 @@ import javax.sql.DataSource;
 public class DBHelper {
 	protected Connection conn = null;
 	protected PreparedStatement psmt = null;
+	protected PreparedStatement psmt1 = null;
+	protected PreparedStatement psmt2 = null;
 	protected Statement stmt = null;
 	protected ResultSet rs = null;
 	
@@ -29,6 +31,8 @@ public class DBHelper {
 			if(rs != null) rs.close();			
 			if(stmt != null) stmt.close();
 			if(psmt != null) psmt.close();
+			if(psmt1 != null) psmt1.close();
+			if(psmt2 != null) psmt2.close();
 			if(conn != null) conn.close();
 		}catch (Exception e) {
 			e.printStackTrace();
