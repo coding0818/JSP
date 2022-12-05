@@ -16,7 +16,7 @@ public class GmailTest {
 		
 		// 기본정보
 		String sender = "coding0818@gmail.com";
-		String password = "jfetfxwjnnbltwwx";
+		String password = "bllovbrgeoqaemma";
 		
 		String receiver = "gy3291@naver.com";
 		String title = "테스트 메일 입니다.";
@@ -45,7 +45,7 @@ public class GmailTest {
 			message.setFrom(new InternetAddress(sender, "관리자", "UTF-8"));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
 			message.setSubject(title);
-			message.setContent(content, "test/html;charset=utf-8");
+			message.setContent(content, "text/html;charset=utf-8");
 			Transport.send(message);
 			
 		}catch(Exception e) {

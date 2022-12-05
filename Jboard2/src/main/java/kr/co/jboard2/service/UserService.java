@@ -54,7 +54,12 @@ public enum UserService {
 		return dao.selectCountNick(nick);
 	}
 	public void selectUsers() {}
-	public void updateUser() {}
+	public int selectInfo(String uid, String pass) {
+		return dao.selectInfo(uid, pass);
+	}
+	public void updateUser(UserVO vo) {
+		dao.updateUser(vo);
+	}
 	public int updateUserPassword(String uid, String pass) {
 		return dao.updateUserPassword(uid, pass);
 	}
@@ -66,6 +71,10 @@ public enum UserService {
 	}
 	public void updateUserForSessionOut(String uid) {
 		dao.updateUserForSessionOut(uid);
+	}
+	
+	public int updateUserForExit(String uid) {
+		return dao.updateUserForExit(uid);
 	}
 	public void deleteUser() {}
 	

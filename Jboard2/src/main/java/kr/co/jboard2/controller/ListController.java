@@ -69,6 +69,7 @@ public class ListController extends HttpServlet{
 		req.setAttribute("pageStartNum", pageStartNum+1);
 		req.setAttribute("search", search);
 		
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/list.jsp");
 		dispatcher.forward(req, resp);
 	}

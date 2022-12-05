@@ -194,7 +194,45 @@ public class UserDAO extends DBHelper{
 		return vo;
 	}
 	public void selectUsers() {}
-	public void updateUser() {}
+	public int selectInfo(String uid, String pass) {
+		int result = 0;
+		try {
+			logger.info("selectInfo...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_INFO);
+			psmt.setString(1, uid);
+			psmt.setString(2, pass);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	public void updateUser(UserVO vo) {
+		try {
+			logger.info("updateUser...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_USER);
+			psmt.setString(1, vo.getName());
+			psmt.setString(2, vo.getNick());
+			psmt.setString(3, vo.getEmail());
+			psmt.setString(4, vo.getHp());
+			psmt.setString(5, vo.getZip());
+			psmt.setString(6, vo.getAddr1());
+			psmt.setString(7, vo.getAddr2());
+			psmt.setString(8, vo.getUid());
+			psmt.setString(9, vo.getRdate());
+			psmt.executeUpdate();
+			
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 	public int updateUserPassword(String uid, String pass) {
 		int result = 0;
 		try {
@@ -251,6 +289,21 @@ public class UserDAO extends DBHelper{
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
+	}
+	public int updateUserForExit(String uid) {
+		int result = 0;
+		try {
+			logger.info("updateUserForExit...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_USER_FOR_EXIT);
+			psmt.setString(1, uid);
+			result = psmt.executeUpdate();
+			
+			close();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 	public void deleteUser() {}
 	

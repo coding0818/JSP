@@ -36,12 +36,12 @@ $(function(){
 				if(data.status == 1){
 					// 메일발송 성공
 					emailcode = data.code;
-					$('.emailResult').text('인증코드를 전송했습니다. 이메일을 확인하세요.');
+					$('.resultEmail').text('인증코드를 전송했습니다. 이메일을 확인하세요.');
 					$('.auth').show();
 					
 				}else{
 					// 메일발송 실패
-					$('.emailResult').text('인증코드 전송이 실패했습니다. 이메일을 확인 후 다시 시도하세요.');
+					$('.resultEmail').text('인증코드 전송이 실패했습니다. 이메일을 확인 후 다시 시도하세요.');
 				}
 			}
 		});
